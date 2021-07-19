@@ -88,7 +88,7 @@ class UserController {
       }
     });
   }
-  
+
   async uploadImage(req, res) {
     try {
       const file = req.files.image;
