@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const config = require('config');
 const Scream = require('./controllers/ScreamController');
 const User = require('./controllers/UserController');
+const Comment = require('./controllers/CommentController');
 const fileUpload = require('express-fileupload');
 
 const registrationValidation = require("./utils/validations/registration");
@@ -18,8 +19,14 @@ const PORT = config.get('port') || 4000;
 app.use(fileUpload({}));
 app.use(express.json({extended: true}));
 
+
+app.post("/screams/:screamId/comments", checkAuth, Scream.commentsOnScream);
 app.get("/screams", Scream.index);
 app.post("/screams", checkAuth, Scream.create);
+app.get("/screams/:id", Scream.getScream);
+
+
+// app.post("/comments", checkAuth, Comment.create);
 
 app.post("/user/signup", registrationValidation, User.register);
 app.post("/user/signin", loginValidation, User.login);
