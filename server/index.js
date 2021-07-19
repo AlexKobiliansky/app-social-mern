@@ -2,6 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const config = require('config');
 const Scream = require('./controllers/ScreamController');
+const User = require('./controllers/UserController');
+
+const registrationValidation = require("./utils/validations/registration");
+const loginValidation = require("./utils/validations/login");
 
 const app = express();
 
@@ -11,6 +15,9 @@ app.use(express.json({extended: true}));
 
 app.get("/screams", Scream.index);
 app.post("/screams", Scream.create);
+
+app.post("/user/signup", registrationValidation, User.register);
+app.post("/user/signin", loginValidation, User.login);
 
 async function start() {
   try {
