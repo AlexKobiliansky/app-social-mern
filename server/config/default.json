@@ -2,5 +2,6 @@
   "port": 4000,
   "mongoUri": "mongodb+srv://alex:632748@cluster0.etfwi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
   "JWT_SECRET": "123YmxCQpsZKKLUPV44VqFRg",
-  "JWT_MAX_AGE": "7 days"
+  "JWT_MAX_AGE": "7 days",
+  "staticPath": "/home/alex/myserver/react/app-social-mern/server/static"
 }

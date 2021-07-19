@@ -13,10 +13,10 @@ const UserSchema = new Schema({
     required: 'Password address is required!',
   },
   confirmPassword: String,
-  // handle: {
-  //   type: String,
-  //   unique: true
-  // }
+  imageUrl: {
+    type: String,
+    default: 'https://msk.pohudejkina.ru/wp-content/plugins/userswp/assets/images/no_profile.png'
+  }
   },{
   timestamps: true,
 }

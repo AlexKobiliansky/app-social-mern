@@ -3,21 +3,27 @@ const mongoose = require('mongoose');
 const config = require('config');
 const Scream = require('./controllers/ScreamController');
 const User = require('./controllers/UserController');
+const fileUpload = require('express-fileupload');
 
 const registrationValidation = require("./utils/validations/registration");
 const loginValidation = require("./utils/validations/login");
+
+const checkAuth = require('./middlewares/checkAuth');
 
 const app = express();
 
 const PORT = config.get('port') || 4000;
 
+app.use(fileUpload({}));
 app.use(express.json({extended: true}));
 
 app.get("/screams", Scream.index);
-app.post("/screams", Scream.create);
+app.post("/screams", checkAuth, Scream.create);
 
 app.post("/user/signup", registrationValidation, User.register);
 app.post("/user/signin", loginValidation, User.login);
+
+app.post("/user/image", checkAuth, User.uploadImage);
 
 async function start() {
   try {

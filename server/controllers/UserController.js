@@ -2,6 +2,8 @@ const UserModel = require('../models/User');
 const {validationResult} = require('express-validator');
 const bcrypt = require('bcrypt');
 const createJWToken = require("../utils/createJWToken");
+const config = require('config');
+const Uuid = require('uuid');
 
 class UserController {
 
@@ -27,7 +29,6 @@ class UserController {
       // handle: req.body.handle,
     }
 
-
     const errors = validationResult(req);
 
     if (postData.password !== postData.confirmPassword) errors.errors.push({msg: 'Passwords must match'});
@@ -36,8 +37,12 @@ class UserController {
       return res.status(422).json({errors: errors.array()});
     }
 
+    // const noImgUrl = 'https://msk.pohudejkina.ru/wp-content/plugins/userswp/assets/images/no_profile.png';
+
     postData.password = bcrypt.hashSync(req.body.password, 4);
     postData.confirmPassword = bcrypt.hashSync(req.body.password, 4);
+    // postData.imageUrl = noImgUrl;
+
     const user = new UserModel(postData);
 
     user.save().then((obj) => {
@@ -49,11 +54,6 @@ class UserController {
       })
     });
   }
-
-
-
-
-
 
   login = (req, res) => {
     const postData = {
@@ -88,7 +88,21 @@ class UserController {
       }
     });
   }
-
+  
+  async uploadImage(req, res) {
+    try {
+      const file = req.files.image;
+      const user = await UserModel.findById(req.user._id);
+      const imageName = Uuid.v4() + '.jpg';
+      file.mv(config.get('staticPath') + '/' + imageName);
+      user.imageUrl = imageName;
+      await user.save();
+      return res.json(user);
+    } catch(e) {
+      console.log(e);
+      return res.status(500).json({message: 'Upload image error'});
+    }
+  }
 }
 
 module.exports = new UserController();
