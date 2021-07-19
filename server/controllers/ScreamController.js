@@ -92,7 +92,7 @@ class ScreamController {
             message: err
           });
         });
- 
+
       return res.json(comment);
     });
   }
