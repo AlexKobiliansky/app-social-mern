@@ -4,29 +4,15 @@ const bcrypt = require('bcrypt');
 const createJWToken = require("../utils/createJWToken");
 const config = require('config');
 const Uuid = require('uuid');
+const fs = require('fs');
 
 class UserController {
-
-  // index = (req, res) => {
-  //   ScreamModel.find().sort({createdAt: -1})
-  //     .exec(function (err, screams) {
-  //       if (err) {
-  //         return res.status(404).json({
-  //           status: 'error',
-  //           message: err
-  //         });
-  //       }
-  //       return res.json(screams);
-  //     });
-  // }
-
 
   register = (req, res) => {
     const postData = {
       email: req.body.email,
       password: req.body.password,
       confirmPassword: req.body.confirmPassword
-      // handle: req.body.handle,
     }
 
     const errors = validationResult(req);
@@ -37,11 +23,8 @@ class UserController {
       return res.status(422).json({errors: errors.array()});
     }
 
-    // const noImgUrl = 'https://msk.pohudejkina.ru/wp-content/plugins/userswp/assets/images/no_profile.png';
-
     postData.password = bcrypt.hashSync(req.body.password, 4);
     postData.confirmPassword = bcrypt.hashSync(req.body.password, 4);
-    // postData.imageUrl = noImgUrl;
 
     const user = new UserModel(postData);
 
@@ -89,20 +72,73 @@ class UserController {
     });
   }
 
+  getAuthenticatedUser = (req, res) => {
+    const id = req.params.id;
+    UserModel.findById(id, (err, user) => {
+      if (err) {
+        return res.status(404).json({
+          message: 'Not found user'
+        });
+      }
+
+      const likes = [];
+
+      return res.json(user);
+    })
+  }
+
+  addUserDetails = (req, res) => {
+    const postData = {
+      bio: req.body.bio,
+      website: req.body.website,
+      location: req.body.location,
+    };
+    const userId = req.user._id;
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({errors: errors.array()});
+    }
+
+    UserModel.findById(userId).then(user => {
+      user.bio = postData.bio;
+      user.website = postData.website;
+      user.location = postData.location;
+      user.save().then((obj) => {
+        return res.status(201).json(obj);
+      }).catch(reason => {
+        res.status(500).json({
+          status: 'error',
+          message: `Problems during adding user details: ${reason}`
+        })
+      });
+    });
+  }
+
   async uploadImage(req, res) {
     try {
       const file = req.files.image;
+      const extension = file.name.split('.')[file.name.split('.').length - 1];
+
+      if(file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') {
+        return res.status(400).json({
+          status: 'error',
+          message: 'Wrong file type submitted'
+        });
+      }
+
       const user = await UserModel.findById(req.user._id);
-      const imageName = Uuid.v4() + '.jpg';
+      const imageName = Uuid.v4() + '.' + extension;
       file.mv(config.get('staticPath') + '/' + imageName);
       user.imageUrl = imageName;
       await user.save();
       return res.json(user);
     } catch(e) {
-      console.log(e);
       return res.status(500).json({message: 'Upload image error'});
     }
   }
+
+
 }
 
 module.exports = new UserController();

@@ -7,6 +7,7 @@ const fileUpload = require('express-fileupload');
 
 const registrationValidation = require("./utils/validations/registration");
 const loginValidation = require("./utils/validations/login");
+const reduceUserDetails = require("./utils/validations/reduceUserDetails");
 
 const checkAuth = require('./middlewares/checkAuth');
 
@@ -22,8 +23,9 @@ app.post("/screams", checkAuth, Scream.create);
 
 app.post("/user/signup", registrationValidation, User.register);
 app.post("/user/signin", loginValidation, User.login);
-
 app.post("/user/image", checkAuth, User.uploadImage);
+app.post("/user", [checkAuth, reduceUserDetails], User.addUserDetails);
+app.get("/user/:id", checkAuth, User.getAuthenticatedUser);
 
 async function start() {
   try {
