@@ -209,6 +209,35 @@ class ScreamController {
         });
     });
   }
+
+  deleteScream = (req, res) => {
+    const screamId = req.params.id
+    const userId = req.user._id
+
+    ScreamModel.findById(screamId, (err, scream) => {
+      if (err || !scream) {
+        return res.status(404).json({
+          status: 'error',
+          message: err
+        })
+      }
+
+      if (scream.user.toString() === userId) {
+
+        scream.remove();
+
+        return res.json({
+          status: 'success',
+          message: 'Scream deleted'
+        })
+      } else {
+        return res.status(404).json({
+          status: 'success',
+          message: 'You cannot delete alien scream'
+        });
+      }
+    });
+  }
 }
 
 module.exports= new ScreamController();

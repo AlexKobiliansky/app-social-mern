@@ -24,6 +24,7 @@ app.use(express.json({extended: true}));
 app.get("/screams", Scream.index);
 app.post("/screams", checkAuth, Scream.create);
 app.get("/screams/:id", Scream.getScream);
+app.delete("/screams/:id", checkAuth, Scream.deleteScream);
 app.post("/screams/:screamId/comments", checkAuth, Scream.commentsOnScream);
 app.get("/screams/:screamId/like", checkAuth, Scream.likeScream);
 app.get("/screams/:screamId/unlike", checkAuth, Scream.unlikeScream);
