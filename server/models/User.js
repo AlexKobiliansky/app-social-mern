@@ -15,7 +15,6 @@ const UserSchema = new Schema({
     confirmPassword: String,
     imageUrl: {
       type: String,
-      default: 'https://msk.pohudejkina.ru/wp-content/plugins/userswp/assets/images/no_profile.png'
     },
   bio: String,
   website: String,

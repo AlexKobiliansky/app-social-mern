@@ -20,10 +20,13 @@ app.use(fileUpload({}));
 app.use(express.json({extended: true}));
 
 
-app.post("/screams/:screamId/comments", checkAuth, Scream.commentsOnScream);
+
 app.get("/screams", Scream.index);
 app.post("/screams", checkAuth, Scream.create);
 app.get("/screams/:id", Scream.getScream);
+app.post("/screams/:screamId/comments", checkAuth, Scream.commentsOnScream);
+app.get("/screams/:screamId/like", checkAuth, Scream.likeScream);
+app.get("/screams/:screamId/unlike", checkAuth, Scream.unlikeScream);
 
 
 // app.post("/comments", checkAuth, Comment.create);

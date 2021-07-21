@@ -1,6 +1,6 @@
 const verifyJWToken = require('../utils/verifyJWToken');
 
-module.exports = checkAuth = (req, res, next) => {
+module.exports = (req, res, next) => {
   let token;
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
     token = req.headers.authorization.split('Bearer ')[1];

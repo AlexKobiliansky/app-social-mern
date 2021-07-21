@@ -1,12 +1,23 @@
 const {model, Schema} = require('mongoose');
 
 const ScreamSchema = new Schema({
-    // userHandle: { type: Schema.Types.ObjectId, ref: "User" },
-    userHandle: String,
+    user: {type: Schema.Types.ObjectId, ref: "User"},
     body: String,
-  },{
-  timestamps: true,
-}
+    userImage: {
+      type: String,
+      default: 'https://msk.pohudejkina.ru/wp-content/plugins/userswp/assets/images/no_profile.png'
+    },
+    likesCount: {
+      type: Number,
+      default: 0
+    },
+  commentsCount: {
+    type: Number,
+    default: 0
+  }
+  }, {
+    timestamps: true,
+  }
 );
 
 module.exports = model('Scream', ScreamSchema);
