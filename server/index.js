@@ -18,6 +18,7 @@ const PORT = config.get('port') || 4000;
 
 app.use(fileUpload({}));
 app.use(express.json({extended: true}));
+app.use(express.static('static'));
 
 
 

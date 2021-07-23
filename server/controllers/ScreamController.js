@@ -24,7 +24,6 @@ class ScreamController {
     const postData = {
       body: req.body.body,
       user: req.user._id,
-      userImage: req.user.imageUrl,
     };
 
     const scream = new ScreamModel(postData);
