@@ -9,6 +9,7 @@ const fileUpload = require('express-fileupload');
 const registrationValidation = require("./utils/validations/registration");
 const loginValidation = require("./utils/validations/login");
 const reduceUserDetails = require("./utils/validations/reduceUserDetails");
+const cors = require('cors')
 
 const checkAuth = require('./middlewares/checkAuth');
 
@@ -17,6 +18,7 @@ const app = express();
 const PORT = config.get('port') || 4000;
 
 app.use(fileUpload({}));
+app.use(cors());
 app.use(express.json({extended: true}));
 app.use(express.static('static'));
 

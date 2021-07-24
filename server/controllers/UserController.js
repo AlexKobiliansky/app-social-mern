@@ -31,10 +31,10 @@ class UserController {
     user.save().then((obj) => {
       return res.status(201).json(obj);
     }).catch(reason => {
-      res.status(500).json({
+      res.status(500).json([{
         status: 'error',
-        message: `Проблемы при регистрации: ${reason}`
-      })
+        msg: `Проблемы при регистрации: ${reason}`,
+      }])
     });
   }
 
@@ -46,15 +46,16 @@ class UserController {
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(422).json({errors: errors.array()});
+      return res.status(422).json(errors.array());
     }
 
     UserModel.findOne({email: postData.email}, (err, user) => {
       if (err || !user) {
-        return res.status(404).json({
+        return res.status(404).json([{
           status: 'error',
-          message: 'auth error: no such user'
-        });
+          msg: 'auth error: no such user',
+          param: 'authError'
+        }]);
       }
 
       if (bcrypt.compareSync(postData.password, user.password)) {

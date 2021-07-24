@@ -21,7 +21,6 @@ const useStyles = makeStyles({
     padding: 25,
     objectFit: 'cover'
   }
-
 });
 
 const Scream = ({scream}) => {
