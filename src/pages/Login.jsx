@@ -13,16 +13,12 @@ import logo from '../images/logo.png'
 import {useDispatch, useSelector} from "react-redux";
 
 const Login = () => {
-  // const [isLoading, setIsLoading] = useState(false);
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
-  // const [errors, setErrors] = useState([]);
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector(({user}) => user);
   const {errors, isLoading} = useSelector(({UI}) => UI);
-
-  console.log('errors', errors);
 
   const handleSubmit = () => {
     dispatch(loginUser({

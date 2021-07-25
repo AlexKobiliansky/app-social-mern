@@ -12,20 +12,23 @@ import jwtDecode from 'jwt-decode';
 import AuthRoute from "./utils/AuthRoute";
 import {Provider} from "react-redux";
 import store from '../src/redux/store';
+import {logoutUser, getUserData} from "./redux/actions/userActions";
+import {SET_AUTHENTICATED} from "./redux/types";
+import {instance} from "./api";
 
 const theme = createTheme(themeFile);
 
 const token = localStorage.socMernToken;
 
-let authenticated;
-
 if (token) {
   const decodedToken = jwtDecode(token);
   if (decodedToken.exp * 1000 < Date.now()) {
+    store.dispatch(logoutUser())
     window.location.href = '/login';
-    authenticated = false
   } else {
-    authenticated = true
+    store.dispatch({type: SET_AUTHENTICATED});
+    instance.defaults.headers.common['Authorization'] = token;
+    store.dispatch(getUserData());
   }
 }
 
@@ -39,8 +42,8 @@ function App() {
         <div className="container">
           <Switch>
             <Route path="/" component={Home} exact/>
-            <AuthRoute path="/login" component={Login} authenticated={authenticated}/>
-            <AuthRoute path="/signup" component={Signup} authenticated={authenticated}/>
+            <AuthRoute path="/login" component={Login} />
+            <AuthRoute path="/signup" component={Signup} />
           </Switch>
         </div>
       </Provider>
