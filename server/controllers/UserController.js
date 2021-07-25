@@ -75,10 +75,11 @@ class UserController {
           token
         });
       } else {
-        res.status(403).json({
+        res.status(403).json([{
           status: 'error',
-          message: 'incorrect password or email!'
-        })
+          msg: 'incorrect password or email',
+          param: 'authError'
+        }])
       }
     });
   }
@@ -87,14 +88,32 @@ class UserController {
     const id = req.params.id;
     UserModel.findById(id, (err, user) => {
       if (err) {
-        return res.status(404).json({
-          message: 'Not found user'
-        });
+        return res.status(404).json([{
+          status: 'error',
+          msg: 'User not found',
+          param: 'authError'
+        }]);
       }
 
       const likes = [];
 
       return res.json(user);
+    })
+  }
+
+  getUserDetails = (req, res) => {
+    const id = req.user._id;
+    UserModel.findById(id, (err, user) => {
+      if (err) {
+        return res.status(404).json([{
+          status: 'error',
+          msg: 'User not found',
+          param: 'authError'
+        }]);
+      }
+      return res.json({
+        credentials: user
+      });
     })
   }
 

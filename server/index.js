@@ -39,6 +39,7 @@ app.post("/user/signup", registrationValidation, User.register);
 app.post("/user/signin", loginValidation, User.login);
 app.post("/user/image", checkAuth, User.uploadImage);
 app.post("/user", [checkAuth, reduceUserDetails], User.addUserDetails);
+app.get("/user", checkAuth, User.getUserDetails);
 app.get("/user/:id", checkAuth, User.getAuthenticatedUser);
 
 async function start() {
