@@ -2,6 +2,10 @@ const {model, Schema} = require('mongoose');
 const isEmail = require('validator/lib/isEmail');
 
 const UserSchema = new Schema({
+  name: {
+    type: String,
+    required: 'Name is required!',
+  },
     email: {
       type: String,
       required: 'Email address is required!',
@@ -12,7 +16,6 @@ const UserSchema = new Schema({
       type: String,
       required: 'Password address is required!',
     },
-    confirmPassword: String,
     imageUrl: {
       type: String,
     },

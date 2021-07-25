@@ -4,36 +4,46 @@ const bcrypt = require('bcrypt');
 const createJWToken = require("../utils/createJWToken");
 const config = require('config');
 const Uuid = require('uuid');
-const fs = require('fs');
 
 class UserController {
 
   register = (req, res) => {
     const postData = {
+      name: req.body.name,
       email: req.body.email,
       password: req.body.password,
-      confirmPassword: req.body.confirmPassword
     }
+
+    const confirmPassword = req.body.confirmPassword;
 
     const errors = validationResult(req);
 
-    if (postData.password !== postData.confirmPassword) errors.errors.push({msg: 'Passwords must match'});
+    if (postData.password !== confirmPassword) errors.errors.push({
+      status: 'error',
+      msg: 'Passwords must match',
+      param: 'confirmPassword'
+    });
 
     if (!errors.isEmpty()) {
-      return res.status(422).json({errors: errors.array()});
+      return res.status(422).json(errors.array());
     }
 
     postData.password = bcrypt.hashSync(req.body.password, 4);
     postData.confirmPassword = bcrypt.hashSync(req.body.password, 4);
 
     const user = new UserModel(postData);
+    const token = createJWToken(user);
 
     user.save().then((obj) => {
-      return res.status(201).json(obj);
+      return res.status(201).json({
+        status: 'success',
+        token
+      });
     }).catch(reason => {
       res.status(500).json([{
         status: 'error',
         msg: `Проблемы при регистрации: ${reason}`,
+        param: 'registerError'
       }])
     });
   }
