@@ -17,6 +17,7 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import EditIcon from '@material-ui/icons/Edit';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 import EditDetails from "./EditDetails";
+import MyButton from "../utils/MyButton";
 
 const useStyles = makeStyles({
   paper: {
@@ -98,12 +99,9 @@ const Profile = () => {
             <div className="image-wrapper">
               <img src={user.imageUrl} alt={user.name} className="profile-image"/>
               <input type="file" id="imageInput" onChange={handleImageChange} hidden="hidden" />
-              <Tooltip title="Edit profile picture" placement="top">
-                <IconButton onClick={handleEditPicture} className="button">
-                  <EditIcon color="primary" />
-                </IconButton>
-              </Tooltip>
-
+              <MyButton tip="Edit profile picture" onClick={handleEditPicture} btnClassName="button">
+                <EditIcon color="primary" />
+              </MyButton>
             </div>
             <hr/>
             <div className="profile-details">
@@ -136,11 +134,9 @@ const Profile = () => {
                 </>}
 
               <hr/>
-              <Tooltip title="Logout" placement="top">
-                <IconButton onClick={handleLogout} className="button">
-                  <KeyboardReturnIcon color="primary" />
-                </IconButton>
-              </Tooltip>
+              <MyButton tip="Logout" onClick={handleLogout} btnClassName="button">
+                <KeyboardReturnIcon color="primary" />
+              </MyButton>
 
               <EditDetails />
             </div>

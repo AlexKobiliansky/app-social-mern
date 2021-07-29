@@ -11,6 +11,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import MyButton from "../utils/MyButton";
 
 const useStyles = makeStyles({
 
@@ -64,11 +65,10 @@ const EditDetails = () => {
 
   return (
     <>
-      <Tooltip title="Edit details" placement="top">
-        <IconButton onClick={handleOpen} className={classes.button}>
-          <EditIcon color="primary" />
-        </IconButton>
-      </Tooltip>
+      <MyButton tip="Edit details" onClick={handleOpen} btnClassName={classes.button}>
+        <EditIcon color="primary" />
+      </MyButton>
+
       <Dialog
         open={openDialog}
         onClose={handleClose}
