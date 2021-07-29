@@ -15,6 +15,8 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import LinkIcon from '@material-ui/icons/Link';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import EditIcon from '@material-ui/icons/Edit';
+import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
+import EditDetails from "./EditDetails";
 
 const useStyles = makeStyles({
   paper: {
@@ -83,6 +85,10 @@ const Profile = () => {
     fileInput.click();
   }
 
+  const handleLogout = () => {
+    dispatch(logoutUser());
+  }
+
 
   return (
     !isLoading ? (
@@ -123,13 +129,20 @@ const Profile = () => {
                 </>
               )}
 
-              {
-                <>
+              {<>
                   <CalendarTodayIcon color="primary"/>
                   {' '}
                   <span>Joined {dayjs(user.createdAt).format('MMM YYYY')}</span>
-                </>
-              }
+                </>}
+
+              <hr/>
+              <Tooltip title="Logout" placement="top">
+                <IconButton onClick={handleLogout} className="button">
+                  <KeyboardReturnIcon color="primary" />
+                </IconButton>
+              </Tooltip>
+
+              <EditDetails />
             </div>
           </div>
         </Paper>
