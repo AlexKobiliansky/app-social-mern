@@ -18,6 +18,7 @@ const UserSchema = new Schema({
     },
     imageUrl: {
       type: String,
+      default: 'no-avatar.png'
     },
   bio: String,
   website: String,

@@ -1,16 +1,20 @@
 import React, {Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import dayjs from 'dayjs';
+import {logoutUser, uploadImage} from "../redux/actions/userActions";
 
 import {makeStyles} from '@material-ui/core/styles';
 import Button from "@material-ui/core/Button";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {Paper} from "@material-ui/core";
 import MuiLink from '@material-ui/core/Link';
 import Typography from "@material-ui/core/Typography";
+import {IconButton} from "@material-ui/core";
+import Tooltip from '@material-ui/core/Tooltip';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import LinkIcon from '@material-ui/icons/Link';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles({
   paper: {
@@ -65,8 +69,21 @@ const Profile = () => {
   const isLoading = useSelector(({user}) => user.isLoading);
   const classes = useStyles();
   const authenticated = useSelector(({user}) => user.authenticated);
+  const dispatch = useDispatch();
 
-  console.log('user', user)
+  const handleImageChange = (e) => {
+    const image = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', image, image.name);
+    dispatch(uploadImage(formData));
+  }
+
+  const handleEditPicture = () => {
+    const fileInput = document.getElementById('imageInput');
+    fileInput.click();
+  }
+
+
   return (
     !isLoading ? (
       authenticated ? (
@@ -74,6 +91,13 @@ const Profile = () => {
           <div className={classes.profile}>
             <div className="image-wrapper">
               <img src={user.imageUrl} alt={user.name} className="profile-image"/>
+              <input type="file" id="imageInput" onChange={handleImageChange} hidden="hidden" />
+              <Tooltip title="Edit profile picture" placement="top">
+                <IconButton onClick={handleEditPicture} className="button">
+                  <EditIcon color="primary" />
+                </IconButton>
+              </Tooltip>
+
             </div>
             <hr/>
             <div className="profile-details">
