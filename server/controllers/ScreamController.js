@@ -146,16 +146,18 @@ class ScreamController {
           });
 
           newLike
-            .save()
-            .then(() => {
-              return res.json({newLike});
-            })
-            .catch(err => {
-              res.status(500).json({
-                status: 'error',
-                message: err
-              });
+            .save(function (err, newLike) {
+              scream.populate('user').execPopulate().then(() => {
+                return res.json(scream.populate(['user']));
+              })
+                .catch(err => {
+                  res.status(500).json({
+                    status: 'error',
+                    message: err
+                  });
+                })
             });
+
         });
     });
   }
@@ -194,19 +196,29 @@ class ScreamController {
             }
           });
 
-          like.remove().then(() => {
-            return res.json({
-              status: 'success',
-              message: 'like removed'
-            });
-          }).catch(err => {
-            return res.json({
-              status: 'success',
-              message: err
-            });
+
+          like.remove(function (err, newLike) {
+            scream.populate('user').execPopulate().then(() => {
+              return res.json(scream.populate(['user']));
+            })
+              .catch(err => {
+                return res.json({
+                  status: 'success',
+                  message: err
+                });
+              });
+
+            // like.remove().then(() => {
+            //   return res.json(scream);
+            // }).catch(err => {
+            //   return res.json({
+            //     status: 'success',
+            //     message: err
+            //   });
+            // });
           });
         });
-    });
+    })
   }
 
   deleteScream = (req, res) => {
@@ -239,4 +251,4 @@ class ScreamController {
   }
 }
 
-module.exports= new ScreamController();
+module.exports = new ScreamController();

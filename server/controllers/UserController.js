@@ -1,4 +1,5 @@
 const UserModel = require('../models/User');
+const LikeModel = require('../models/Like');
 const {validationResult} = require('express-validator');
 const bcrypt = require('bcrypt');
 const createJWToken = require("../utils/createJWToken");
@@ -95,8 +96,6 @@ class UserController {
         }]);
       }
 
-      const likes = [];
-
       return res.json(user);
     })
   }
@@ -111,8 +110,20 @@ class UserController {
           param: 'authError'
         }]);
       }
-      return res.json({
-        credentials: user
+
+      LikeModel.find({user: id}, (err, likes) => {
+        if (err) {
+          return res.status(404).json([{
+            status: 'error',
+            msg: 'Error during executing users likes',
+            param: 'authError'
+          }]);
+        }
+
+        return res.json({
+          credentials: user,
+          likes: likes
+        });
       });
     })
   }

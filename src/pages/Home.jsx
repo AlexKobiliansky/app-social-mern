@@ -1,24 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {Grid} from "@material-ui/core";
-import axios from "axios";
 import Scream from "../components/Scream";
 import Profile from "../components/Profile";
+import {getScreams} from "../redux/actions/dataActions";
+import {useDispatch, useSelector} from "react-redux";
 
 const Home = () => {
-  const [screams, setScreams] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
+  const {screams, isLoading} = useSelector(({data}) => data);
 
   useEffect(() => {
-    axios.get('/screams')
-      .then(({data}) => {
-        setScreams(data);
-
-        setIsLoading(false)
-      })
-      .catch(err => {
-        console.log(err);
-        setIsLoading(false)
-      })
+    dispatch(getScreams())
   }, []);
 
   let recentScreamsMarkup = screams?.map(scream => <Scream key={scream._id} scream={scream}/>);
