@@ -14,11 +14,13 @@ import ChatIcon from '@material-ui/icons/Chat';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import {FavoriteBorder} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
+import DeleteScream from "./DeleteScream";
 
 const useStyles = makeStyles({
   card: {
     display: 'flex',
     marginBottom: 20,
+    position: 'relative'
   },
   image: {
     minWidth: 200
@@ -62,7 +64,11 @@ const Scream = ({scream}) => {
           <FavoriteBorder color="primary" />
         </MyButton>
       )
-  )
+  );
+
+  const deleteButton = user.authenticated && user.credentials._id === scream.user._id ? (
+    <DeleteScream screamId={scream._id}/>
+  ) : null
 
   dayjs.extend(relativeTime);
 
@@ -80,8 +86,9 @@ const Scream = ({scream}) => {
           to={`/users/${scream.user._id}`}
           color="primary"
         >
-          {scream.user.email}
+          {scream.user.name}
         </Typography>
+        {deleteButton}
         <Typography variant="body2" color="textSecondary">{dayjs(scream.createdAt).fromNow()}</Typography>
         <Typography variant="body1" color="textSecondary">{scream.body}</Typography>
         {likeButton}

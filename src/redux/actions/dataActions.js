@@ -1,4 +1,4 @@
-import {SET_SCREAMS, LOADING_DATA, LIKE_SCREAM, UNLIKE_SCREAM} from '../types';
+import {SET_SCREAMS, LOADING_DATA, LIKE_SCREAM, UNLIKE_SCREAM, DELETE_SCREAM} from '../types';
 import {instance} from "../../api";
 
 export const getScreams = () => dispatch => {
@@ -36,6 +36,14 @@ export const unlikeScream = (screamId) => dispatch => {
         type: UNLIKE_SCREAM,
         payload: data
       })
+    })
+    .catch(err => console.log(err));
+}
+
+export const deleteScream = (screamId) => dispatch => {
+  instance.delete(`/screams/${screamId}`)
+    .then(() => {
+      dispatch({type: DELETE_SCREAM, payload: screamId})
     })
     .catch(err => console.log(err));
 }
