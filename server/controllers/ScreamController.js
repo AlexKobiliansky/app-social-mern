@@ -50,7 +50,7 @@ class ScreamController {
 
   getScream = (req, res) => {
     const id = req.params.id;
-    ScreamModel.findById(id, (err, scream) => {
+    ScreamModel.findById(id).populate('user').exec(function(err, scream) {
       if (err) {
         return res.status(404).json({
           message: 'Not found scream'
@@ -59,6 +59,16 @@ class ScreamController {
 
       return res.json(scream);
     });
+
+    // ScreamModel.findById(id, (err, scream) => {
+    //   if (err) {
+    //     return res.status(404).json({
+    //       message: 'Not found scream'
+    //     });
+    //   }
+    //
+    //   return res.json(scream);
+    // });
   }
 
   commentsOnScream = (req, res) => {

@@ -7,7 +7,7 @@ import {
   SET_ERRORS,
   CLEAR_ERRORS,
   POST_SCREAM,
-  LOADING_UI
+  LOADING_UI, SET_SCREAM, STOP_LOADING_UI
 } from '../types';
 import {instance} from "../../api";
 
@@ -40,7 +40,6 @@ export const postScream = (newScream, handleClose) => dispatch => {
       handleClose();
     })
     .catch(err => {
-      console.log('dataActions', err.response.data)
       dispatch({
         type: SET_ERRORS,
         payload: err.response.data
@@ -74,6 +73,19 @@ export const deleteScream = (screamId) => dispatch => {
   instance.delete(`/screams/${screamId}`)
     .then(() => {
       dispatch({type: DELETE_SCREAM, payload: screamId})
+    })
+    .catch(err => console.log(err));
+}
+
+export const getScream = (screamId) => dispatch => {
+  dispatch({type: LOADING_UI});
+  instance.get(`/screams/${screamId}`)
+    .then(({data}) => {
+      dispatch({
+        type: SET_SCREAM,
+        payload: data
+      });
+      dispatch({type: STOP_LOADING_UI})
     })
     .catch(err => console.log(err));
 }

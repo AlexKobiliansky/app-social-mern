@@ -13,7 +13,6 @@ import {postScream} from "../redux/actions/dataActions";
 import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {CLEAR_ERRORS} from "../redux/types";
-import {logoutUser} from "../redux/actions/userActions";
 
 const useStyles = makeStyles({
   submitButton: {
@@ -26,7 +25,7 @@ const useStyles = makeStyles({
   closeButton: {
     position: 'absolute',
     left: '90%',
-    top: '10%',
+    top: '6%',
   }
 });
 
@@ -36,8 +35,6 @@ const PostScream = () => {
   const [open, setOpen] = useState(false);
   const [bodyScream, setBodyScream] = useState('');
   const {errors, isLoading} = useSelector(({UI}) => UI);
-
-
 
   useEffect(() => {
     if (errors === null) {
@@ -114,7 +111,6 @@ const PostScream = () => {
         </DialogContent>
       </Dialog>
     </>
-
   );
 };
 
