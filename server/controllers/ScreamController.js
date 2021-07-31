@@ -26,19 +26,26 @@ class ScreamController {
       user: req.user._id,
     };
 
+    if (postData.body.length < 1) {
+      return res.status(500).json({
+        status: 'error',
+        msg: 'Empty scream',
+        param: 'screamError'
+      });
+    }
+
     const scream = new ScreamModel(postData);
 
-    scream
-      .save()
+    scream.save()
       .then(() => {
-        res.json({scream});
+        scream.populate('user').execPopulate()
+          .then(() => {
+            res.json(scream);
+          })
+          .catch(err => {
+            res.status(500).json(err);
+          });
       })
-      .catch(err => {
-        res.status(500).json({
-          status: 'error',
-          message: err
-        });
-      });
   }
 
   getScream = (req, res) => {
@@ -207,15 +214,6 @@ class ScreamController {
                   message: err
                 });
               });
-
-            // like.remove().then(() => {
-            //   return res.json(scream);
-            // }).catch(err => {
-            //   return res.json({
-            //     status: 'success',
-            //     message: err
-            //   });
-            // });
           });
         });
     })

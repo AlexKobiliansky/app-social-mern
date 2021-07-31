@@ -1,4 +1,14 @@
-import {SET_SCREAMS, LOADING_DATA, LIKE_SCREAM, UNLIKE_SCREAM, DELETE_SCREAM} from '../types';
+import {
+  SET_SCREAMS,
+  LOADING_DATA,
+  LIKE_SCREAM,
+  UNLIKE_SCREAM,
+  DELETE_SCREAM,
+  SET_ERRORS,
+  CLEAR_ERRORS,
+  POST_SCREAM,
+  LOADING_UI
+} from '../types';
 import {instance} from "../../api";
 
 export const getScreams = () => dispatch => {
@@ -14,6 +24,26 @@ export const getScreams = () => dispatch => {
       dispatch({
         type: SET_SCREAMS,
         payload: []
+      })
+    })
+}
+
+export const postScream = (newScream, handleClose) => dispatch => {
+  dispatch({type: LOADING_UI});
+  instance.post(`/screams`, newScream)
+    .then(({data}) => {
+      dispatch({
+        type: POST_SCREAM,
+        payload: data
+      });
+      dispatch({type: CLEAR_ERRORS});
+      handleClose();
+    })
+    .catch(err => {
+      console.log('dataActions', err.response.data)
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data
       })
     })
 }
