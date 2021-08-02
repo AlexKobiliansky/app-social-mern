@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
-import MyButton from "../utils/MyButton";
+import MyButton from "../../utils/MyButton";
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -9,10 +9,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {CircularProgress} from "@material-ui/core";
 
-import {postScream} from "../redux/actions/dataActions";
+import {postScream} from "../../redux/actions/dataActions";
 import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch, useSelector} from "react-redux";
-import {CLEAR_ERRORS} from "../redux/types";
+import {CLEAR_ERRORS} from "../../redux/types";
 
 const useStyles = makeStyles({
   submitButton: {

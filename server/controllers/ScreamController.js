@@ -50,25 +50,31 @@ class ScreamController {
 
   getScream = (req, res) => {
     const id = req.params.id;
-    ScreamModel.findById(id).populate('user').exec(function(err, scream) {
+    ScreamModel.findById(id)
+      .populate('user')
+      .lean()
+      .exec(function(err, scream) {
       if (err) {
         return res.status(404).json({
           message: 'Not found scream'
         });
       }
 
-      return res.json(scream);
-    });
+        CommentModel.find({scream: id})
+          .populate('user')
+          .exec((err, comments) => {
+          if (err) {
+            return res.status(404).json([{
+              status: 'error',
+              msg: 'Error during executing scream comments',
+              param: 'commentError'
+            }]);
+          }
 
-    // ScreamModel.findById(id, (err, scream) => {
-    //   if (err) {
-    //     return res.status(404).json({
-    //       message: 'Not found scream'
-    //     });
-    //   }
-    //
-    //   return res.json(scream);
-    // });
+          scream['comments'] = comments;
+          return res.json(scream);
+        });
+    });
   }
 
   commentsOnScream = (req, res) => {
@@ -76,7 +82,7 @@ class ScreamController {
 
     if (req.body.body.trim() === '') return res.status(400).json({
       status: 'error',
-      message: 'Comment must not be empty'
+      msg: 'Comment must not be empty'
     });
 
     ScreamModel.findById(screamId, (err, scream) => {
@@ -90,7 +96,6 @@ class ScreamController {
       const newComment = {
         body: req.body.body,
         user: req.user._id,
-        userImage: req.user.imageURL,
         scream: screamId,
       }
 
@@ -103,19 +108,17 @@ class ScreamController {
       comment
         .save()
         .then(() => {
-          res.json({
-            status: 'success',
-            message: `Scream ${scream._id} created successfully!`
-          });
+          comment.populate('user').execPopulate()
+            .then(() => {
+              res.json(comment)
+            })
         })
         .catch(err => {
           res.status(500).json({
             status: 'error',
-            message: err
+            msg: err
           });
         });
-
-      return res.json(comment);
     });
   }
 

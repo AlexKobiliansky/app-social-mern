@@ -4,10 +4,10 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import {useSelector} from "react-redux";
-import MyButton from "../utils/MyButton";
+import MyButton from "../../utils/MyButton";
 import HomeIcon from '@material-ui/icons/Home';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import PostScream from "./PostScream";
+import PostScream from "../scream/PostScream";
 
 const Navbar = () => {
   const authenticated = useSelector(({user}) => user.authenticated);

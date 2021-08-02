@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import dayjs from 'dayjs';
-import {logoutUser, uploadImage} from "../redux/actions/userActions";
+import {logoutUser, uploadImage} from "../../redux/actions/userActions";
 
 import {makeStyles} from '@material-ui/core/styles';
 import Button from "@material-ui/core/Button";
@@ -17,7 +17,7 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import EditIcon from '@material-ui/icons/Edit';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 import EditDetails from "./EditDetails";
-import MyButton from "../utils/MyButton";
+import MyButton from "../../utils/MyButton";
 
 const useStyles = makeStyles({
   paper: {

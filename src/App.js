@@ -3,7 +3,7 @@ import {Switch, Route} from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/layout/Navbar";
 import {createTheme} from '@material-ui/core/styles';
 import {ThemeProvider} from "@material-ui/core";
 import {CssBaseline} from "@material-ui/core";

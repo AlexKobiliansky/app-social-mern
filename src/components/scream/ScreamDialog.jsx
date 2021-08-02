@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import MyButton from "../utils/MyButton";
+import MyButton from "../../utils/MyButton";
 import dayjs from "dayjs";
 import {Link} from 'react-router-dom';
 import Dialog from '@material-ui/core/Dialog';
@@ -9,17 +9,15 @@ import CloseIcon from "@material-ui/icons/Close";
 import UnfoldMore from "@material-ui/icons/UnfoldMore";
 import {Grid} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import {getScream} from "../redux/actions/dataActions";
+import {getScream, clearErrors} from "../../redux/actions/dataActions";
 import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch, useSelector} from "react-redux";
 import LikeButton from "./LikeButton";
 import ChatIcon from "@material-ui/icons/Chat";
+import Comments from "./Comments";
+import CommentForm from "./CommentForm";
 
 const useStyles = makeStyles({
-  invisibleSeparator: {
-    border: 'none',
-    margin: 4
-  },
   profileImage: {
     width: 200,
     height: 200,
@@ -60,6 +58,7 @@ const ScreamDialog = ({screamId, userId}) => {
 
   const handleClose = () => {
     setOpen(false);
+    dispatch(clearErrors())
   }
 
   const dialogMarkup = isLoading ? (
@@ -81,14 +80,14 @@ const ScreamDialog = ({screamId, userId}) => {
         >
           @{scream?.user?.name}
         </Typography>
-        <hr className={classes.invisibleSeparator}/>
+        <hr className='invisibleSeparator'/>
         <Typography
           variant="body2"
           color="textSecondary"
         >
           {dayjs(scream.createdAt).format('h:mm a, MMMM DD YYYY')}
         </Typography>
-        <hr className={classes.invisibleSeparator}/>
+        <hr className='invisibleSeparator'/>
         <Typography
           variant="body1"
         >
@@ -101,6 +100,9 @@ const ScreamDialog = ({screamId, userId}) => {
         </MyButton>
         <span>{scream.commentsCount} comments</span>
       </Grid>
+      <hr className='visibleSeparator'/>
+      <CommentForm screamId={screamId}/>
+      <Comments comments={scream.comments}/>
     </Grid>
   )
 

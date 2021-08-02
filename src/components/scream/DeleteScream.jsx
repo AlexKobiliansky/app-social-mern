@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import MyButton from "../utils/MyButton";
+import MyButton from "../../utils/MyButton";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
 import {DeleteOutline} from "@material-ui/icons";
 
-import {deleteScream} from '../redux/actions/dataActions';
+import {deleteScream} from '../../redux/actions/dataActions';
 import {useDispatch} from "react-redux";
 
 const useStyles = makeStyles({
