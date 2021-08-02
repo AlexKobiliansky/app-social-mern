@@ -31,7 +31,7 @@ const useStyles = makeStyles({
   }
 });
 
-const Scream = ({scream}) => {
+const Scream = ({scream, openDialog}) => {
   const classes = useStyles();
   const user = useSelector(({user}) => user);
 
@@ -69,6 +69,7 @@ const Scream = ({scream}) => {
         <ScreamDialog
           screamId={scream._id}
           userId={scream.user._id}
+          openDialog={openDialog}
          />
       </CardContent>
     </Card>

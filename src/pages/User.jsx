@@ -10,9 +10,14 @@ import StaticProfile from "../components/profile/StaticProfile";
 const User = (props) => {
   const dispatch = useDispatch();
   const [profile, setProfile] = useState(null);
+  const [screamIdParam, setScreamIdParam] = useState(null);
   const {screams, isLoading} = useSelector(({data}) => data);
 
   useEffect(() => {
+    const screamId = props.match.params.screamId;
+
+    if (screamId) setScreamIdParam(screamId);
+
     const id = props.match.params.id;
     dispatch(getUserData(id));
     instance.get(`user/${id}`)
@@ -24,8 +29,15 @@ const User = (props) => {
 
   const screamsMarkup = screams === null ? (
     <p>No screams from this user</p>
+  ) : !screamIdParam ? (
+    screams.map(scream => <Scream key={scream._id} scream={scream}/>)
   ) : (
-    screams.map(scream => <Scream key={scream._id} scream={scream} />)
+    screams.map(scream => {
+      if (scream._id !== screamIdParam)
+        return <Scream key={scream._id} scream={scream}/>
+      else
+        return <Scream key={scream._id} scream={scream} openDialog/>
+    })
   )
 
   return (

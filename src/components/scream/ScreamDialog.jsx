@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import MyButton from "../../utils/MyButton";
 import dayjs from "dayjs";
 import {Link} from 'react-router-dom';
@@ -45,19 +45,34 @@ const useStyles = makeStyles({
   }
 });
 
-const ScreamDialog = ({screamId, userId}) => {
+const ScreamDialog = ({screamId, userId, openDialog}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const {isLoading} = useSelector(({UI}) => UI);
   const {scream} = useSelector(({data}) => data);
   const [open, setOpen] = useState(false);
+  const [oldPath, setOldPath] = useState(window.location.pathname);
+  const [newPath, setNewPath] = useState('');
+
+  useEffect(() => {
+    if (openDialog) {
+      handleOpen()
+    }
+  }, [])
 
   const handleOpen = () => {
+    const newPath = `/users/${userId}/screams/${screamId}`;
+
+    if (oldPath === newPath) setOldPath(`/users/${userId}`);
+
+    window.history.pushState(null, null, newPath);
+
     setOpen(true);
     dispatch(getScream(screamId));
   }
 
   const handleClose = () => {
+    window.history.pushState(null, null, oldPath)
     setOpen(false);
     dispatch(clearErrors())
   }
@@ -70,7 +85,7 @@ const ScreamDialog = ({screamId, userId}) => {
   ) : (
     <Grid container spacing={16}>
       <Grid item sm={5}>
-        <img src={`${API_URL + scream.user.imageUrl}`} alt="image" className={classes.profileImage}/>
+        <img src={`${API_URL + scream?.user?.imageUrl}`} alt="image" className={classes.profileImage}/>
       </Grid>
       <Grid item sm={7}>
         <Typography
