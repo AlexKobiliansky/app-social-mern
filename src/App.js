@@ -15,6 +15,7 @@ import store from '../src/redux/store';
 import {logoutUser, getUserData} from "./redux/actions/userActions";
 import {SET_AUTHENTICATED} from "./redux/types";
 import {instance} from "./api";
+import User from "./pages/User";
 
 const theme = createTheme(themeFile);
 
@@ -44,6 +45,7 @@ function App() {
             <Route path="/" component={Home} exact/>
             <AuthRoute path="/login" component={Login} />
             <AuthRoute path="/signup" component={Signup} />
+            <Route path="/users/:id" component={User} exact/>
           </Switch>
         </div>
       </Provider>

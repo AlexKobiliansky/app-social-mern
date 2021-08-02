@@ -107,6 +107,24 @@ export const submitComment = (screamId, commentData) => dispatch => {
     })
 }
 
+export const getUserData = (userId) => dispatch => {
+  dispatch({type: LOADING_DATA});
+  instance.get(`/user/${userId}`)
+    .then(({data}) => {
+      dispatch({
+        type: SET_SCREAMS,
+        payload: data.screams
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: SET_SCREAMS,
+        payload: null
+      })
+    })
+
+}
+
 export const clearErrors = () => dispatch => {
   dispatch({type: CLEAR_ERRORS})
 }

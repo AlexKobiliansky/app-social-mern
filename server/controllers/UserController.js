@@ -1,5 +1,6 @@
 const UserModel = require('../models/User');
 const LikeModel = require('../models/Like');
+const ScreamModel = require('../models/Scream');
 const {validationResult} = require('express-validator');
 const bcrypt = require('bcrypt');
 const createJWToken = require("../utils/createJWToken");
@@ -96,7 +97,19 @@ class UserController {
         }]);
       }
 
-      return res.json(user);
+      ScreamModel.find({user: id}).populate('user').exec((err, screams) => {
+        if (err) {
+          return res.status(404).json([{
+            status: 'error',
+            msg: 'Error during executing users screams',
+          }]);
+        }
+
+        return res.json({
+          user: user,
+          screams: screams
+        });
+      });
     })
   }
 

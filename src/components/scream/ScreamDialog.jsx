@@ -16,6 +16,7 @@ import LikeButton from "./LikeButton";
 import ChatIcon from "@material-ui/icons/Chat";
 import Comments from "./Comments";
 import CommentForm from "./CommentForm";
+import {API_URL} from "../../config";
 
 const useStyles = makeStyles({
   profileImage: {
@@ -69,7 +70,7 @@ const ScreamDialog = ({screamId, userId}) => {
   ) : (
     <Grid container spacing={16}>
       <Grid item sm={5}>
-        <img src={scream?.user?.imageUrl} alt="image" className={classes.profileImage}/>
+        <img src={`${API_URL + scream.user.imageUrl}`} alt="image" className={classes.profileImage}/>
       </Grid>
       <Grid item sm={7}>
         <Typography

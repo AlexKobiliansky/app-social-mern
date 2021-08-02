@@ -89,8 +89,7 @@ const Profile = () => {
   const handleLogout = () => {
     dispatch(logoutUser());
   }
-
-
+  
   return (
     !isLoading ? (
       authenticated ? (

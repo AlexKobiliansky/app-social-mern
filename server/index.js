@@ -12,6 +12,7 @@ const reduceUserDetails = require("./utils/validations/reduceUserDetails");
 const cors = require('cors')
 
 const checkAuth = require('./middlewares/checkAuth');
+const path = require("path");
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(fileUpload({}));
 app.use(cors());
 app.use(express.json({extended: true}));
 app.use(express.static('static'));
+// app.use('/static', express.static(__dirname + '/static'));
 
 
 

@@ -4,6 +4,7 @@ import {Grid} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import {Link} from "react-router-dom";
 import dayjs from "dayjs";
+import {API_URL} from "../../config";
 
 const useStyles = makeStyles({
   commentImage: {
@@ -27,7 +28,7 @@ const Comments = ({comments}) => {
           <Grid item sm={12} key={comment._id}>
             <Grid container>
               <Grid item sm={2}>
-                <img src={comment.user.imageUrl} alt="image" className={classes.commentImage}/>
+                <img src={`${API_URL + comment.user.imageUrl}`} alt="image" className={classes.commentImage}/>
               </Grid>
 
               <Grid item sm={9}>
