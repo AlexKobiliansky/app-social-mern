@@ -23,7 +23,7 @@ const Notifications = () => {
     {
       recipient: '60f543b5fcccd42869022678',
       sender: '60fc664af43e7855cf1a0070',
-      createdAt: '2021-08-02T10:48:03.288+00:00',
+      createdAt: '2021-07-02T10:48:03.288+00:00',
       screamId: '6103db166a24c672421c0a5f',
       type: 'like',
       read: false,
@@ -92,7 +92,7 @@ const Notifications = () => {
           component={Link}
           color="default"
           variant="body1"
-          to={`/users/${not.recipient}/scream/${not.screamId}`}
+          to={`/users/${not.recipient}/screams/${not.screamId}`}
         >
           {not.sender} {verb} your scream {time}
         </Typography>

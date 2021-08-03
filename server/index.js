@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const config = require('config');
 const Scream = require('./controllers/ScreamController');
 const User = require('./controllers/UserController');
-const Comment = require('./controllers/CommentController');
+const Notification = require('./controllers/NotificationController');
 const fileUpload = require('express-fileupload');
 
 const registrationValidation = require("./utils/validations/registration");
@@ -12,10 +12,8 @@ const reduceUserDetails = require("./utils/validations/reduceUserDetails");
 const cors = require('cors')
 
 const checkAuth = require('./middlewares/checkAuth');
-const path = require("path");
 
 const app = express();
-
 const PORT = config.get('port') || 4000;
 
 app.use(fileUpload({}));
@@ -43,6 +41,12 @@ app.post("/user/image", checkAuth, User.uploadImage);
 app.post("/user", [checkAuth, reduceUserDetails], User.addUserDetails);
 app.get("/user", checkAuth, User.getUserDetails);
 app.get("/user/:id", checkAuth, User.getAuthenticatedUser);
+
+
+app.post("/notifications", checkAuth, Notification.create);
+
+
+
 
 async function start() {
   try {
