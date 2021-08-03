@@ -8,6 +8,7 @@ import MyButton from "../../utils/MyButton";
 import HomeIcon from '@material-ui/icons/Home';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import PostScream from "../scream/PostScream";
+import Notifications from "./Notifications";
 
 const Navbar = () => {
   const authenticated = useSelector(({user}) => user.authenticated);
@@ -25,9 +26,11 @@ const Navbar = () => {
                 </MyButton>
               </Link>
 
-              <MyButton tip="Notifications">
-                <NotificationsIcon/>
-              </MyButton>
+              {/*<MyButton tip="Notifications">*/}
+              {/*  <NotificationsIcon/>*/}
+              {/*</MyButton>*/}
+
+              <Notifications />
             </>
           ) : (
             <>
