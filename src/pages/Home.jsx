@@ -10,7 +10,7 @@ const Home = () => {
   const {screams, isLoading} = useSelector(({data}) => data);
 
   useEffect(() => {
-    dispatch(getScreams())
+    dispatch(getScreams()) // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   let recentScreamsMarkup = screams?.map(scream => <Scream key={scream._id} scream={scream}/>);

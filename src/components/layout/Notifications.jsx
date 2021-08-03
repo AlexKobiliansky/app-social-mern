@@ -4,7 +4,6 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import {Link} from "react-router-dom";
 import {markNotificationsRead} from "../../redux/actions/userActions";
 
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -43,16 +42,13 @@ const Notifications = () => {
 
 
   const handleOpen = (e) => {
-    setAnchorEl(e.target)
+    setAnchorEl(e.target);
+    let unreadNotificationsIds = notifications.filter(not => !not.read).map(not => not._id)
+    dispatch(markNotificationsRead(unreadNotificationsIds));
   }
 
   const handleClose = () => {
     setAnchorEl(null)
-  }
-
-  const onMenuOpened = () => {
-    let unreadNotificationsIds = notifications.filter(not => !not.read).map(not => not._id)
-    dispatch(markNotificationsRead(unreadNotificationsIds));
   }
 
   let notificationsIcon;
@@ -90,7 +86,7 @@ const Notifications = () => {
         {icon}
         <Typography
           component={Link}
-          color="default"
+          color="primary"
           variant="body1"
           to={`/users/${not.recipient}/screams/${not.screamId}`}
         >
@@ -119,7 +115,6 @@ const Notifications = () => {
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={handleClose}
-        onEntered={onMenuOpened}
       >
         {notificationsMarkup}
       </Menu>

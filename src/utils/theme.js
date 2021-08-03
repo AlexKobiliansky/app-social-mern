@@ -1,4 +1,4 @@
-export default {
+const theme = {
   overrides: {
     MuiCssBaseline: {
       "@global": {
@@ -39,3 +39,5 @@ export default {
     },
   },
 }
+
+export default theme;

@@ -3,7 +3,6 @@ import {Grid} from "@material-ui/core";
 import {getUserData} from "../redux/actions/dataActions";
 import {useDispatch, useSelector} from "react-redux";
 import {instance} from "../api";
-import Profile from "../components/profile/Profile";
 import Scream from "../components/scream/Scream";
 import StaticProfile from "../components/profile/StaticProfile";
 
@@ -24,7 +23,7 @@ const User = (props) => {
       .then(({data}) => {
         setProfile(data.user)
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err)); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const screamsMarkup = screams === null ? (

@@ -31,7 +31,7 @@ const EditDetails = () => {
       bio: credentials?.bio,
       website: credentials?.website,
       location: credentials?.location,
-    })
+    }) // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleOpen = () => {

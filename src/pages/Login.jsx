@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 
-import {instance} from "../api";
 import TextField from '@material-ui/core/TextField';
 import {Grid} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
@@ -17,7 +16,6 @@ const Login = () => {
   const [passwordValue, setPasswordValue] = useState('');
   const history = useHistory();
   const dispatch = useDispatch();
-  const user = useSelector(({user}) => user);
   const {errors, isLoading} = useSelector(({UI}) => UI);
 
   const handleSubmit = () => {

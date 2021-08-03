@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
 import dayjs from 'dayjs';
 import {logoutUser, uploadImage} from "../../redux/actions/userActions";
@@ -9,8 +9,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {Paper} from "@material-ui/core";
 import MuiLink from '@material-ui/core/Link';
 import Typography from "@material-ui/core/Typography";
-import {IconButton} from "@material-ui/core";
-import Tooltip from '@material-ui/core/Tooltip';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import LinkIcon from '@material-ui/icons/Link';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';

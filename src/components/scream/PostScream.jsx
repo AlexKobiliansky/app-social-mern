@@ -40,7 +40,7 @@ const PostScream = () => {
     if (errors === null) {
       setBodyScream('');
       handleClose();
-    }
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errors])
 
   const handleOpen = () => {

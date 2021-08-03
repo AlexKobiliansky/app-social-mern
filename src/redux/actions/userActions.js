@@ -73,6 +73,7 @@ export const editUserDetails = (userDetails) => (dispatch) => {
 }
 
 export const markNotificationsRead = (notificationIds) => dispatch => {
+  console.log('userActions - marked notifications', notificationIds)
   // instance.post('/notifications', notificationIds)
   //   .then(({data}) => {
   //     dispatch({

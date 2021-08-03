@@ -52,12 +52,11 @@ const ScreamDialog = ({screamId, userId, openDialog}) => {
   const {scream} = useSelector(({data}) => data);
   const [open, setOpen] = useState(false);
   const [oldPath, setOldPath] = useState(window.location.pathname);
-  const [newPath, setNewPath] = useState('');
 
   useEffect(() => {
     if (openDialog) {
       handleOpen()
-    }
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleOpen = () => {
@@ -85,7 +84,7 @@ const ScreamDialog = ({screamId, userId, openDialog}) => {
   ) : (
     <Grid container spacing={16}>
       <Grid item sm={5}>
-        <img src={`${API_URL + scream?.user?.imageUrl}`} alt="image" className={classes.profileImage}/>
+        <img src={`${API_URL + scream?.user?.imageUrl}`} alt="profile" className={classes.profileImage}/>
       </Grid>
       <Grid item sm={7}>
         <Typography

@@ -6,7 +6,6 @@ import Button from '@material-ui/core/Button';
 import {useSelector} from "react-redux";
 import MyButton from "../../utils/MyButton";
 import HomeIcon from '@material-ui/icons/Home';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import PostScream from "../scream/PostScream";
 import Notifications from "./Notifications";
 
@@ -25,10 +24,6 @@ const Navbar = () => {
                   <HomeIcon/>
                 </MyButton>
               </Link>
-
-              {/*<MyButton tip="Notifications">*/}
-              {/*  <NotificationsIcon/>*/}
-              {/*</MyButton>*/}
 
               <Notifications />
             </>

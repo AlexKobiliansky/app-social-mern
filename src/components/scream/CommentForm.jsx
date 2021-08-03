@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 const CommentForm = ({screamId}) => {
   const classes = useStyles();
   const [body, setBody] = useState('');
-  const {errors, isLoading} = useSelector(({UI}) => UI);
+  const {errors} = useSelector(({UI}) => UI);
   const {authenticated} = useSelector(({user}) => user);
   const dispatch = useDispatch();
 

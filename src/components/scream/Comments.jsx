@@ -28,7 +28,7 @@ const Comments = ({comments}) => {
           <Grid item sm={12} key={comment._id}>
             <Grid container>
               <Grid item sm={2}>
-                <img src={`${API_URL + comment.user.imageUrl}`} alt="image" className={classes.commentImage}/>
+                <img src={`${API_URL + comment.user.imageUrl}`} alt="profile" className={classes.commentImage}/>
               </Grid>
 
               <Grid item sm={9}>
