@@ -15,7 +15,15 @@ const LikeButton = ({scream}) => {
   };
 
   const handleLikeScream = () => {
-    dispatch(likeScream(scream._id))
+    const postData = {
+      recipient: scream.user._id,
+      sender: user.credentials._id,
+      screamId: scream._id,
+      type: 'like',
+      read: false
+    }
+
+    dispatch(likeScream(scream._id, postData));
   }
 
   const handleUnlikeScream = () => {

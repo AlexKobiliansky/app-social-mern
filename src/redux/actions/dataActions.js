@@ -10,6 +10,7 @@ import {
   LOADING_UI, SET_SCREAM, STOP_LOADING_UI, SUBMIT_COMMENT
 } from '../types';
 import {instance} from "../../api";
+import {createNotification} from "./notificationActions";
 
 export const getScreams = () => dispatch => {
   dispatch({type: LOADING_DATA});
@@ -47,13 +48,15 @@ export const postScream = (newScream, handleClose) => dispatch => {
     })
 }
 
-export const likeScream = (screamId) => dispatch => {
+export const likeScream = (screamId, postData) => dispatch => {
   instance.get(`/screams/${screamId}/like`)
     .then(({data}) => {
       dispatch({
         type: LIKE_SCREAM,
         payload: data
-      })
+      });
+
+      dispatch(createNotification(postData))
     })
     .catch(err => console.log(err));
 }
@@ -90,7 +93,7 @@ export const getScream = (screamId) => dispatch => {
     .catch(err => console.log(err));
 }
 
-export const submitComment = (screamId, commentData) => dispatch => {
+export const submitComment = (screamId, commentData, notificationData) => dispatch => {
   instance.post(`/screams/${screamId}/comments`, commentData)
     .then(({data}) => {
       dispatch({
@@ -98,6 +101,7 @@ export const submitComment = (screamId, commentData) => dispatch => {
         payload: data
       });
       dispatch(clearErrors());
+      dispatch(createNotification(notificationData));
     })
     .catch(err => {
       dispatch({

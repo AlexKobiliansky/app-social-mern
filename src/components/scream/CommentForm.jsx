@@ -13,11 +13,11 @@ const useStyles = makeStyles({
   }
 });
 
-const CommentForm = ({screamId}) => {
+const CommentForm = ({screamId, recipientId}) => {
   const classes = useStyles();
   const [body, setBody] = useState('');
   const {errors} = useSelector(({UI}) => UI);
-  const {authenticated} = useSelector(({user}) => user);
+  const {authenticated, credentials} = useSelector(({user}) => user);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,7 +32,15 @@ const CommentForm = ({screamId}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(submitComment(screamId, {body: body}))
+    const notificationData = {
+      recipient: recipientId,
+      sender: credentials._id,
+      screamId: screamId,
+      type: 'comment',
+      read: false
+    }
+
+    dispatch(submitComment(screamId, {body: body}, notificationData))
     setBody('');
   }
 

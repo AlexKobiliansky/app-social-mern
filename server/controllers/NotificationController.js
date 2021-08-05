@@ -66,6 +66,30 @@ class NotificationController {
         });
     });
   }
+
+  markAsUnread = (req, res) => {
+    const ids = req.body.ids;
+
+    NotificationModel.find()
+      .where('_id')
+      .in(ids)
+      .updateMany({}, { $set: { read: false } })
+      .exec((err, notifications) => {
+        if (err) {
+          return res.status(500).json(err);
+        }
+
+        res.json({
+          status: 'success',
+          message: 'updated'
+        });
+      });
+  }
+
+
+
 }
+
+
 
 module.exports = new NotificationController();

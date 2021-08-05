@@ -5,8 +5,7 @@ import {
   LOADING_UI,
   SET_UNAUTHENTICATED,
   LOADING_USER,
-  MARK_NOTIFICATIONS_READ,
-  SET_NOTIFICATIONS
+  CLEAR_NOTIFICATIONS
 } from "../types";
 import {instance} from "../../api";
 import {getUserNotifications} from "./notificationActions";
@@ -39,7 +38,6 @@ export const loginUser = (userData, history) => (dispatch) => {
       dispatch(getUserData());
       dispatch({type: CLEAR_ERRORS});
       history.push('/');
-      dispatch(getUserNotifications());
     })
     .catch(err => {
       dispatch({
@@ -50,9 +48,10 @@ export const loginUser = (userData, history) => (dispatch) => {
 }
 
 export const logoutUser = () => (dispatch) => {
+  dispatch({type: SET_UNAUTHENTICATED});
+  dispatch({type: CLEAR_NOTIFICATIONS});
   localStorage.removeItem('socMernToken');
   delete instance.defaults.headers.common['Authorization'];
-  dispatch({type: SET_UNAUTHENTICATED});
 }
 
 export const getUserData = () => (dispatch) => {
@@ -62,7 +61,8 @@ export const getUserData = () => (dispatch) => {
     dispatch({
       type: SET_USER,
       payload: data
-    })
+    });
+      dispatch(getUserNotifications());
   })
     .catch(err => console.log(err));
 }
@@ -82,18 +82,6 @@ export const editUserDetails = (userDetails) => (dispatch) => {
     .then(() => dispatch(getUserData()))
     .catch(err => console.log(err));
 }
-
-// export const markNotificationsRead = (notificationIds) => dispatch => {
-//   console.log('userActions - marked notifications', notificationIds)
-//   // instance.post('/notifications', notificationIds)
-//   //   .then(({data}) => {
-//   //     dispatch({
-//   //       type: MARK_NOTIFICATIONS_READ
-//   //     });
-//   //   })
-//   //   .catch(err => console.log(err));
-//
-// }
 
 const setAuthorizationHeader = (token) => {
   const appToken = `Bearer ${token}`

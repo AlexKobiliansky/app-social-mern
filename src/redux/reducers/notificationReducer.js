@@ -1,6 +1,8 @@
 import {
+  CLEAR_NOTIFICATIONS,
   MARK_NOTIFICATIONS_READ,
-  SET_NOTIFICATIONS
+  SET_NOTIFICATIONS,
+  CREATE_NOTIFICATION
 } from "../types";
 
 const initialState = {
@@ -14,6 +16,19 @@ function notificationReducer(state = initialState, action) {
         ...state,
         notifications: action.payload
       }
+    case CLEAR_NOTIFICATIONS:
+      return {
+        ...state,
+        notifications: []
+      }
+    // case CREATE_NOTIFICATION:
+    //   return {
+    //     ...state,
+    //     notifications: [
+    //       action.payload,
+    //       ...state.notifications
+    //     ]
+    //   }
     case MARK_NOTIFICATIONS_READ:
       state.notifications.forEach(not => not.read = true);
       return {
