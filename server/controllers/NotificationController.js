@@ -4,6 +4,25 @@ const LikeModel = require('../models/Like');
 const NotificationModel = require('../models/Notification');
 
 class NotificationController {
+
+  getNotifications = (req, res) => {
+    const userId = req.user._id;
+
+    NotificationModel
+      .find({recipient: userId})
+      .sort({createdAt: -1})
+      .populate(['recipient', 'sender'])
+      .exec(function (err, notifications) {
+        if (err) {
+          return res.status(404).json({
+            status: 'error',
+            message: err
+          });
+        }
+        return res.json(notifications);
+      });
+  }
+
   create = (req, res) => {
     const postData = {
       recipient: req.body.recipient,
@@ -27,6 +46,25 @@ class NotificationController {
             res.status(500).json(err);
           });
       })
+  }
+
+  markAsRead = (req, res) => {
+    const ids = req.body.ids;
+
+    NotificationModel.find()
+      .where('_id')
+      .in(ids)
+      .updateMany({}, { $set: { read: true } })
+      .exec((err, notifications) => {
+        if (err) {
+          return res.status(500).json(err);
+        }
+
+        res.json({
+          status: 'success',
+          message: 'updated'
+        });
+    });
   }
 }
 

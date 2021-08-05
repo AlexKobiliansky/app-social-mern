@@ -4,13 +4,15 @@ import thunk from 'redux-thunk';
 import userReducer from './reducers/userReducer';
 import dataReducer from './reducers/dataReducer';
 import uiReducer from './reducers/uiReducer';
+import notificationsReducer from './reducers/notificationReducer';
 
 const initialState = {};
 
 const reducers = combineReducers({
   user: userReducer,
   data: dataReducer,
-  UI: uiReducer
+  UI: uiReducer,
+  notifications: notificationsReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

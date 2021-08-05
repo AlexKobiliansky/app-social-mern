@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import {Link} from "react-router-dom";
-import {markNotificationsRead} from "../../redux/actions/userActions";
+import {markNotificationsRead} from "../../redux/actions/notificationActions";
 
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
@@ -14,50 +14,30 @@ import Badge from '@material-ui/core/Badge';
 import NotificationIcon from '@material-ui/icons/Notifications';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ChatIcon from '@material-ui/icons/Chat';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 const Notifications = () => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [notifications, setNotifications] = useState([
-    {
-      recipient: '60f543b5fcccd42869022678',
-      sender: '60fc664af43e7855cf1a0070',
-      createdAt: '2021-07-02T10:48:03.288+00:00',
-      screamId: '6103db166a24c672421c0a5f',
-      type: 'like',
-      read: false,
-      _id: '60f543b5fcccd42869022611'
-    },
-    {
-      recipient: '60f543b5fcccd42869022678',
-      sender: '60fc664af43e7855cf1a0070',
-      createdAt: '2021-08-02T10:48:03.288+00:00',
-      screamId: '6103db166a24c672421c0a5f',
-      type: 'comment',
-      read: true,
-      _id: '60f543b5fcccd42869022611'
-    }
-  ]);
+  const {notifications} = useSelector(({notifications}) => notifications);
   const dispatch = useDispatch();
 
-
   const handleOpen = (e) => {
-    setAnchorEl(e.target);
-    let unreadNotificationsIds = notifications.filter(not => !not.read).map(not => not._id)
-    dispatch(markNotificationsRead(unreadNotificationsIds));
+    setAnchorEl(e.currentTarget);
   }
 
   const handleClose = () => {
-    setAnchorEl(null)
+    setAnchorEl(null);
+    let unreadNotificationsIds = notifications.filter(not => !not.read).map(not => not._id)
+    dispatch(markNotificationsRead(unreadNotificationsIds));
   }
 
   let notificationsIcon;
 
   if (notifications && notifications.length > 0) {
-    notifications.filter(not => not.red === false).length > 0
+    notifications.filter(not => not.read === false).length > 0
       ? notificationsIcon = (
         <Badge
-          badgeContent={notifications.filter(not => not.red === false).length}
+          badgeContent={notifications.filter(not => not.read === false).length}
           color="secondary"
         >
           <NotificationIcon/>
@@ -88,9 +68,9 @@ const Notifications = () => {
           component={Link}
           color="primary"
           variant="body1"
-          to={`/users/${not.recipient}/screams/${not.screamId}`}
+          to={`/users/${not.recipient._id}/screams/${not.screamId}`}
         >
-          {not.sender} {verb} your scream {time}
+          {not.sender.name} {verb} your scream {time}
         </Typography>
       </MenuItem>
     })

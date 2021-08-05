@@ -52,11 +52,6 @@ function userReducer(state = initialState, action) {
         ...state,
         likes: state.likes.filter(like => like.scream !== action.payload._id)
       }
-    case MARK_NOTIFICATIONS_READ:
-      state.notifications.forEach(not => not.read = true);
-      return {
-        ...state
-      }
     default:
       return state;
   }

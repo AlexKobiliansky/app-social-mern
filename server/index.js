@@ -44,6 +44,8 @@ app.get("/user/:id", checkAuth, User.getAuthenticatedUser);
 
 
 app.post("/notifications", checkAuth, Notification.create);
+app.post("/notifications/mark", checkAuth, Notification.markAsRead);
+app.get("/notifications", checkAuth, Notification.getNotifications);
 
 
 
