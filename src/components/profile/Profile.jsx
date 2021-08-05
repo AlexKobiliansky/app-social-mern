@@ -16,6 +16,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 import EditDetails from "./EditDetails";
 import MyButton from "../../utils/MyButton";
+import ProfileSkeleton from "../../utils/Skeletons/ProfileSkeleton";
 
 const useStyles = makeStyles({
   paper: {
@@ -154,7 +155,7 @@ const Profile = () => {
           </Typography>
         </Paper>
       )
-    ) : (<p>loading...</p>)
+    ) : (<ProfileSkeleton />)
   );
 };
 

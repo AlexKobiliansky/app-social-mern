@@ -4,6 +4,7 @@ import Scream from "../components/scream/Scream";
 import Profile from "../components/profile/Profile";
 import {getScreams} from "../redux/actions/dataActions";
 import {useDispatch, useSelector} from "react-redux";
+import ScreamSkeleton from "../utils/Skeletons/ScreamSkeleton";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ const Home = () => {
   return (
     <Grid container spacing={8}>
       <Grid item sm={8} xs={12}>
-        {isLoading ? 'Loading' : recentScreamsMarkup}
+        {isLoading ? <ScreamSkeleton /> : recentScreamsMarkup}
       </Grid>
 
       <Grid item sm={4} xs={12}>
