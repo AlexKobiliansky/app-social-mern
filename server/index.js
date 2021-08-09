@@ -1,10 +1,16 @@
+const http = require('http');
 const express = require('express');
 const mongoose = require('mongoose');
 const config = require('config');
-const Scream = require('./controllers/ScreamController');
+
 const User = require('./controllers/UserController');
-const Notification = require('./controllers/NotificationController');
+const ScreamController = require('./controllers/ScreamController');
+const NotificationController = require('./controllers/NotificationController');
+
 const fileUpload = require('express-fileupload');
+
+const createSocket = require('./utils/socket');
+const socket = require('socket.io')
 
 const registrationValidation = require("./utils/validations/registration");
 const loginValidation = require("./utils/validations/login");
@@ -14,6 +20,12 @@ const cors = require('cors')
 const checkAuth = require('./middlewares/checkAuth');
 
 const app = express();
+const server  = require('http').createServer(app);
+const io = socket(server);
+
+const Notification = new NotificationController(io);
+const Scream = new ScreamController(io);
+
 const PORT = config.get('port') || 4000;
 
 app.use(fileUpload({}));
@@ -58,7 +70,7 @@ async function start() {
       useUnifiedTopology: true,
       useCreateIndex: true
     });
-    app.listen(PORT, () => console.log(`App has been started! Port ${PORT}`));
+    server.listen(PORT, () => console.log(`App has been started! Port ${PORT}`));
   } catch (e) {
     console.log('Server Error', e.message);
     process.exit(1);

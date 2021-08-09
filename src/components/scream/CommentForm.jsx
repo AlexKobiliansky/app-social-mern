@@ -5,6 +5,8 @@ import {Grid} from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
 import {submitComment} from "../../redux/actions/dataActions";
 import {useDispatch, useSelector} from "react-redux";
+import socket from "../../utils/socket";
+import {getUserNotifications} from "../../redux/actions/notificationActions";
 
 
 const useStyles = makeStyles({
@@ -43,6 +45,19 @@ const CommentForm = ({screamId, recipientId}) => {
     dispatch(submitComment(screamId, {body: body}, notificationData))
     setBody('');
   }
+
+  const handleCommentSocket = () => {
+    dispatch(getUserNotifications())
+  }
+
+  useEffect(() => {
+    socket.on('NEW_NOTIFICATION', handleCommentSocket)
+
+    return () => {
+      socket.removeListener('NEW_NOTIFICATION', handleCommentSocket)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const commentFormMarkup = authenticated ? (
     <Grid item sm={12} style={{textAlign: 'center'}}>

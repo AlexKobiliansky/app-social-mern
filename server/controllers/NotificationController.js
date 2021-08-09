@@ -1,9 +1,12 @@
-const ScreamModel = require('../models/Scream');
-const CommentModel = require('../models/Comment');
-const LikeModel = require('../models/Like');
 const NotificationModel = require('../models/Notification');
+const socket = require("socket.io");
 
 class NotificationController {
+  io;
+
+  constructor(io) {
+    this.io = io;
+  }
 
   getNotifications = (req, res) => {
     const userId = req.user._id;
@@ -41,6 +44,7 @@ class NotificationController {
         notification.populate(['recipient', 'sender']).execPopulate()
           .then(() => {
             res.json(notification);
+            this.io.emit('NEW_NOTIFICATION', notification)
           })
           .catch(err => {
             res.status(500).json(err);
@@ -90,6 +94,4 @@ class NotificationController {
 
 }
 
-
-
-module.exports = new NotificationController();
+module.exports = NotificationController;

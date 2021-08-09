@@ -5,6 +5,8 @@ import Profile from "../components/profile/Profile";
 import {getScreams} from "../redux/actions/dataActions";
 import {useDispatch, useSelector} from "react-redux";
 import ScreamSkeleton from "../utils/Skeletons/ScreamSkeleton";
+import {getUserNotifications} from "../redux/actions/notificationActions";
+import socket from "../utils/socket";
 
 const Home = () => {
   const dispatch = useDispatch();

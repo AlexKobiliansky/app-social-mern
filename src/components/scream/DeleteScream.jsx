@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import MyButton from "../../utils/MyButton";
 import Button from "@material-ui/core/Button";
@@ -9,6 +9,9 @@ import {DeleteOutline} from "@material-ui/icons";
 
 import {deleteScream} from '../../redux/actions/dataActions';
 import {useDispatch} from "react-redux";
+import {getUserNotifications} from "../../redux/actions/notificationActions";
+import socket from "../../utils/socket";
+import {DELETE_SCREAM} from "../../redux/types";
 
 const useStyles = makeStyles({
   deleteButton: {
@@ -35,6 +38,19 @@ const DeleteScream = ({screamId}) => {
     dispatch(deleteScream(screamId));
     setOpen(false);
   }
+
+  const handleDeleteSocket = (screamId) => {
+    dispatch({type: DELETE_SCREAM, payload: screamId});
+  }
+
+  useEffect(() => {
+    socket.on('DELETE_SCREAM', (screamId) => handleDeleteSocket(screamId))
+
+    return () => {
+      socket.removeListener('DELETE_SCREAM', handleDeleteSocket)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return <>
     <MyButton tip="Delete Scream" onClick={handleOpen} btnClassName={classes.deleteButton}>

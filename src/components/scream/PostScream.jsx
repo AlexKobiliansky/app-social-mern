@@ -12,7 +12,9 @@ import {CircularProgress} from "@material-ui/core";
 import {postScream} from "../../redux/actions/dataActions";
 import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch, useSelector} from "react-redux";
-import {CLEAR_ERRORS} from "../../redux/types";
+import {CLEAR_ERRORS, POST_SCREAM} from "../../redux/types";
+import {getUserNotifications} from "../../redux/actions/notificationActions";
+import socket from "../../utils/socket";
 
 const useStyles = makeStyles({
   submitButton: {
@@ -61,6 +63,25 @@ const PostScream = () => {
     dispatch(postScream({body: bodyScream}, handleClose));
     setBodyScream('');
   }
+
+
+  const createScreamSocket = (data) => {
+    dispatch({
+      type: POST_SCREAM,
+      payload: data
+    });
+  }
+
+  useEffect(() => {
+    socket.on('NEW_SCREAM', (data)=> {
+      createScreamSocket(data)
+    })
+
+    return () => {
+      socket.removeListener('NEW_SCREAM', createScreamSocket)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

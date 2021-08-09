@@ -100,24 +100,24 @@ const ScreamDialog = ({screamId, userId, openDialog}) => {
           variant="body2"
           color="textSecondary"
         >
-          {dayjs(scream.createdAt).format('h:mm a, MMMM DD YYYY')}
+          {dayjs(scream?.createdAt).format('h:mm a, MMMM DD YYYY')}
         </Typography>
         <hr className='invisibleSeparator'/>
         <Typography
           variant="body1"
         >
-          {scream.body}
+          {scream?.body}
         </Typography>
         <LikeButton scream={scream}/>
-        <span>{scream.likesCount} Likes</span>
+        <span>{scream?.likesCount} Likes</span>
         <MyButton tip="comments">
           <ChatIcon color="primary"/>
         </MyButton>
-        <span>{scream.commentsCount} comments</span>
+        <span>{scream?.commentsCount} comments</span>
       </Grid>
       <hr className='visibleSeparator'/>
       <CommentForm screamId={screamId} recipientId={userId}/>
-      <Comments comments={scream.comments}/>
+      <Comments comments={scream?.comments}/>
     </Grid>
   )
 
@@ -144,7 +144,7 @@ const ScreamDialog = ({screamId, userId, openDialog}) => {
           <CloseIcon />
         </MyButton>
         <DialogContent className={classes.dialogContent}>
-          {dialogMarkup}
+          {scream ? dialogMarkup : 'something went wrong...'}
         </DialogContent>
       </Dialog>
     </>

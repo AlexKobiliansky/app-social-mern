@@ -97,7 +97,10 @@ class UserController {
         }]);
       }
 
-      ScreamModel.find({user: id}).populate('user').exec((err, screams) => {
+      ScreamModel.find({user: id})
+        .sort({createdAt: -1})
+        .populate('user')
+        .exec((err, screams) => {
         if (err) {
           return res.status(404).json([{
             status: 'error',

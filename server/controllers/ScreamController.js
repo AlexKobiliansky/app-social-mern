@@ -4,6 +4,12 @@ const LikeModel = require('../models/Like');
 
 class ScreamController {
 
+  io;
+
+  constructor(io) {
+    this.io = io;
+  }
+
   index = (req, res) => {
     ScreamModel
       .find()
@@ -41,6 +47,7 @@ class ScreamController {
         scream.populate('user').execPopulate()
           .then(() => {
             res.json(scream);
+            this.io.emit('NEW_SCREAM', scream);
           })
           .catch(err => {
             res.status(500).json(err);
@@ -71,7 +78,10 @@ class ScreamController {
             }]);
           }
 
-          scream['comments'] = comments;
+          if (scream) {
+            scream['comments'] = comments;
+          }
+
           return res.json(scream);
         });
     });
@@ -247,11 +257,13 @@ class ScreamController {
       if (scream.user.toString() === userId) {
 
         scream.remove();
+        this.io.emit('DELETE_SCREAM', screamId);
 
-        return res.json({
+        res.json({
           status: 'success',
           message: 'Scream deleted'
-        })
+        });
+
       } else {
         return res.status(404).json({
           status: 'success',
@@ -262,4 +274,4 @@ class ScreamController {
   }
 }
 
-module.exports = new ScreamController();
+module.exports = ScreamController;

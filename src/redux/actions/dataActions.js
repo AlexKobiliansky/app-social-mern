@@ -32,11 +32,11 @@ export const getScreams = () => dispatch => {
 export const postScream = (newScream, handleClose) => dispatch => {
   dispatch({type: LOADING_UI});
   instance.post(`/screams`, newScream)
-    .then(({data}) => {
-      dispatch({
-        type: POST_SCREAM,
-        payload: data
-      });
+    .then(() => {
+      // dispatch({
+      //   type: POST_SCREAM,
+      //   payload: data
+      // });
       dispatch(clearErrors());
       handleClose();
     })
@@ -75,7 +75,7 @@ export const unlikeScream = (screamId) => dispatch => {
 export const deleteScream = (screamId) => dispatch => {
   instance.delete(`/screams/${screamId}`)
     .then(() => {
-      dispatch({type: DELETE_SCREAM, payload: screamId})
+      // dispatch({type: DELETE_SCREAM, payload: screamId})
     })
     .catch(err => console.log(err));
 }
