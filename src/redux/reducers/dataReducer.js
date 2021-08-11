@@ -6,12 +6,14 @@ import {
   DELETE_SCREAM,
   POST_SCREAM,
   SET_SCREAM,
-  SUBMIT_COMMENT
+  SUBMIT_COMMENT, UPDATE_LIKES_ON_SCREAM
 } from "../types";
 
 const initialState = {
   screams: [],
-  scream: {},
+  scream: {
+    comments: []
+  },
   isLoading: false
 };
 
@@ -44,6 +46,21 @@ const initialState = {
         ...state,
       }
     }
+    case UPDATE_LIKES_ON_SCREAM:
+      return {
+        ...state,
+        screams: state.screams.map(scream => {
+          if (scream._id !== action.payload._id) return scream;
+
+          const updatedScream = {
+            ...scream,
+            likesCount: action.payload.likesCount
+          }
+
+          return updatedScream;
+        })
+      }
+
     case DELETE_SCREAM:
       return {
         ...state,
@@ -60,9 +77,15 @@ const initialState = {
     case SUBMIT_COMMENT:
       return {
         ...state,
+        screams: state.screams.map(scream => {
+          if ( scream._id !== action.payload.scream._id) return scream;
+          return {
+            ...scream,
+            commentsCount: scream.commentsCount + 1}
+        }),
         scream: {
           ...state.scream,
-          comments: [action.payload, ...state.scream.comments],
+          comments: [...state.scream.comments, action.payload.comment],
           commentsCount: state.scream.commentsCount + 1
         }
       }

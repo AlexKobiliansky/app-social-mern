@@ -96,10 +96,12 @@ export const getScream = (screamId) => dispatch => {
 export const submitComment = (screamId, commentData, notificationData) => dispatch => {
   instance.post(`/screams/${screamId}/comments`, commentData)
     .then(({data}) => {
-      dispatch({
-        type: SUBMIT_COMMENT,
-        payload: data
-      });
+      // console.log('actions', data)
+      // dispatch(submitCommentAC(data));
+      // dispatch({
+      //   type: SUBMIT_COMMENT,
+      //   payload: data
+      // });
       dispatch(clearErrors());
       dispatch(createNotification(notificationData));
     })
@@ -132,3 +134,6 @@ export const getUserData = (userId) => dispatch => {
 export const clearErrors = () => dispatch => {
   dispatch({type: CLEAR_ERRORS})
 }
+
+// actionCreators
+export const submitCommentAC = (data) => ({type: SUBMIT_COMMENT, payload: data});

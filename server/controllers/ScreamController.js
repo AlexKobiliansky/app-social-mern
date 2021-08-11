@@ -60,31 +60,31 @@ class ScreamController {
     ScreamModel.findById(id)
       .populate('user')
       .lean()
-      .exec(function(err, scream) {
-      if (err) {
-        return res.status(404).json({
-          message: 'Not found scream'
-        });
-      }
+      .exec(function (err, scream) {
+        if (err) {
+          return res.status(404).json({
+            message: 'Not found scream'
+          });
+        }
 
         CommentModel.find({scream: id})
           .populate('user')
           .exec((err, comments) => {
-          if (err) {
-            return res.status(404).json([{
-              status: 'error',
-              msg: 'Error during executing scream comments',
-              param: 'commentError'
-            }]);
-          }
+            if (err) {
+              return res.status(404).json([{
+                status: 'error',
+                msg: 'Error during executing scream comments',
+                param: 'commentError'
+              }]);
+            }
 
-          if (scream) {
-            scream['comments'] = comments;
-          }
+            if (scream) {
+              scream['comments'] = comments;
+            }
 
-          return res.json(scream);
-        });
-    });
+            return res.json(scream);
+          });
+      });
   }
 
   commentsOnScream = (req, res) => {
@@ -120,7 +120,13 @@ class ScreamController {
         .then(() => {
           comment.populate('user').execPopulate()
             .then(() => {
-              res.json(comment)
+              const result = {
+                scream: scream,
+                comment: comment
+              }
+              this.io.emit('NEW_COMMENT_ON_SCREAM', result);
+              res.json(result);
+
             })
         })
         .catch(err => {
@@ -143,8 +149,11 @@ class ScreamController {
         });
       }
 
-      LikeModel.find({scream: screamId, user: userId}).limit(1)
-        .exec(function (err, likes) {
+
+      LikeModel
+        .find({scream: screamId, user: userId}).limit(1)
+        .lean()
+        .exec( (err, likes) => {
           if (likes.length) {
             return res.status(400).json({
               status: 'error',
@@ -175,10 +184,42 @@ class ScreamController {
             scream: screamId
           });
 
+          // CommentModel.find({scream: screamId})
+          //   .populate('user')
+          //   .exec((err, comments) => {
+          //     if (err) {
+          //       return res.status(404).json([{
+          //         status: 'error',
+          //         msg: 'Error during executing scream comments',
+          //         param: 'commentError'
+          //       }]);
+          //     }
+          //
+          //     if (scream) {
+          //       scream['comments'] = comments;
+          //     }
+          //
+          //     console.log('here', scream);
+          //
+          //   })
+
           newLike
-            .save(function (err, newLike) {
-              scream.populate('user').execPopulate().then(() => {
-                return res.json(scream.populate(['user']));
+            .save( (err, newLike) => {
+
+              if (err) {
+                return res.status(500).json({
+                  status: 'error',
+                  message: err
+                });
+              }
+
+              scream['comments'] = 2;
+
+              scream
+                .populate('user').execPopulate().then(() => {
+                this.io.emit('UPDATE_LIKES_ON_SCREAM', scream.populate(['user']));
+                console.log(scream.populate(['user']))
+                res.json(scream.populate(['user']));
               })
                 .catch(err => {
                   res.status(500).json({
@@ -188,8 +229,11 @@ class ScreamController {
                 })
             });
 
+
         });
     });
+
+
   }
 
   unlikeScream = (req, res) => {
@@ -204,7 +248,7 @@ class ScreamController {
       }
 
       LikeModel.find({scream: screamId, user: userId}).limit(1)
-        .exec(function (err, likes) {
+        .exec((err, likes) => {
 
           const like = likes[0];
 
@@ -227,8 +271,9 @@ class ScreamController {
           });
 
 
-          like.remove(function (err, newLike) {
+          like.remove((err, newLike) => {
             scream.populate('user').execPopulate().then(() => {
+              this.io.emit('UPDATE_LIKES_ON_SCREAM', scream.populate(['user']));
               return res.json(scream.populate(['user']));
             })
               .catch(err => {

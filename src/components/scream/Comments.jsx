@@ -24,7 +24,7 @@ const Comments = ({comments}) => {
   return (
     <Grid container>
       {comments.map((comment, index) => {
-        return <>
+        return (
           <Grid item sm={12} key={comment._id}>
             <Grid container>
               <Grid item sm={2}>
@@ -60,8 +60,8 @@ const Comments = ({comments}) => {
               </Grid>
             </Grid>
           </Grid>
-          {(index !== comments.length-1) && <hr className="visibleSeparator"/>}
-        </>
+        // {(index !== comments.length-1) && <hr className="visibleSeparator"/>}
+        )
 
       })}
     </Grid>

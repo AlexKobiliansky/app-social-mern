@@ -21,8 +21,11 @@ export const UNLIKE_SCREAM = 'UNLIKE_SCREAM';
 export const DELETE_SCREAM = 'DELETE_SCREAM';
 export const SUBMIT_COMMENT = 'SUBMIT_COMMENT';
 
-//Notification reducer types
+// Notification reducer types
 export const SET_NOTIFICATIONS = 'SET_NOTIFICATIONS';
 export const CLEAR_NOTIFICATIONS = 'CLEAR_NOTIFICATIONS';
 export const MARK_NOTIFICATIONS_READ = 'MARK_NOTIFICATIONS_READ';
 export const CREATE_NOTIFICATION = 'CREATE_NOTIFICATION';
+
+// Sockets types
+export const UPDATE_LIKES_ON_SCREAM = 'UPDATE_LIKES_ON_SCREAM';

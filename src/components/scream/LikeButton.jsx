@@ -32,18 +32,18 @@ const LikeButton = ({scream}) => {
     dispatch(unlikeScream(scream._id))
   }
 
-  const handleLikeSocket = () => {
-    dispatch(getUserNotifications())
-  }
-
-  useEffect(() => {
-    socket.on('NEW_NOTIFICATION', handleLikeSocket)
-
-    return () => {
-      socket.removeListener('NEW_NOTIFICATION', handleLikeSocket)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // const handleLikeSocket = () => {
+  //   dispatch(getUserNotifications())
+  // }
+  //
+  // useEffect(() => {
+  //   socket.on('NEW_NOTIFICATION', handleLikeSocket)
+  //
+  //   return () => {
+  //     socket.removeListener('NEW_NOTIFICATION', handleLikeSocket)
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   const likeButton = !user.authenticated ? (
     <Link to="/login">

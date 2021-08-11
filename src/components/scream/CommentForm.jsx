@@ -3,10 +3,11 @@ import {makeStyles} from "@material-ui/core/styles";
 import Button from '@material-ui/core/Button';
 import {Grid} from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
-import {submitComment} from "../../redux/actions/dataActions";
+import {submitComment, submitCommentAC} from "../../redux/actions/dataActions";
 import {useDispatch, useSelector} from "react-redux";
 import socket from "../../utils/socket";
 import {getUserNotifications} from "../../redux/actions/notificationActions";
+import {POST_SCREAM, SUBMIT_COMMENT} from "../../redux/types";
 
 
 const useStyles = makeStyles({
@@ -46,22 +47,9 @@ const CommentForm = ({screamId, recipientId}) => {
     setBody('');
   }
 
-  const handleCommentSocket = () => {
-    dispatch(getUserNotifications())
-  }
-
-  useEffect(() => {
-    socket.on('NEW_NOTIFICATION', handleCommentSocket)
-
-    return () => {
-      socket.removeListener('NEW_NOTIFICATION', handleCommentSocket)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const commentFormMarkup = authenticated ? (
     <Grid item sm={12} style={{textAlign: 'center'}}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} style={{marginTop: 25}}>
         <TextField
           name="body"
           type="text"
