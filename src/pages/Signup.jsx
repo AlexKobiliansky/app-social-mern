@@ -9,15 +9,15 @@ import {signupUser} from "../redux/actions/userActions";
 import {useDispatch, useSelector} from "react-redux";
 
 const Signup = () => {
+  const dispatch = useDispatch();
+  const {errors, isLoading} = useSelector(({UI}) => UI);
+  const history = useHistory();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
     confirmPassword: ''
   })
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const {errors, isLoading} = useSelector(({UI}) => UI);
 
   const handleSubmit = () => {
     dispatch(signupUser({

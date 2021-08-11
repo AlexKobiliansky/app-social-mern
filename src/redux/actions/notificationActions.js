@@ -2,7 +2,7 @@ import {CREATE_NOTIFICATION, MARK_NOTIFICATIONS_READ, SET_NOTIFICATIONS} from ".
 import {instance} from "../../api";
 
 
-export const createNotification = (postData) => (dispatch) => {
+export const createNotification = (postData) => dispatch => {
   instance.post('/notifications', postData)
     .then(({data}) => {
       dispatch({
@@ -13,7 +13,7 @@ export const createNotification = (postData) => (dispatch) => {
     .catch(err => console.log(err));
 }
 
-export const getUserNotifications = () => (dispatch) => {
+export const getUserNotifications = () => dispatch => {
   instance.get('/notifications')
     .then(({data}) => {
       dispatch({
@@ -32,7 +32,6 @@ export const markNotificationsRead = (notificationIds) => dispatch => {
       });
     })
     .catch(err => console.log(err));
-
 }
 
 

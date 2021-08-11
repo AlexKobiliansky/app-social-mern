@@ -28,47 +28,41 @@ const Comments = () => {
   const comments = useSelector(({data}) => data.currentScreamComments);
   return (
     <Grid container>
-      {comments?.map((comment, index) => {
-        return (
-          <Grid item sm={12} key={comment._id} className={classes.comment}>
-            <Grid container>
-              <Grid item sm={2}>
-                <img src={`${API_URL + comment.user.imageUrl}`} alt="profile" className={classes.commentImage}/>
-              </Grid>
+      {comments?.map((comment) => {
+          return (
+            <Grid item sm={12} key={comment._id} className={classes.comment}>
+              <Grid container>
+                <Grid item sm={2}>
+                  <img src={`${API_URL + comment.user.imageUrl}`} alt="profile" className={classes.commentImage}/>
+                </Grid>
 
-              <Grid item sm={9}>
-                <div className={classes.commentData}>
-                  <Typography
-                    variant="h5"
-                    component={Link}
-                    to={`users/${comment.user._id}`}
-                    color="primary"
-                  >
-                    {comment.user.name}
-                  </Typography>
+                <Grid item sm={9}>
+                  <div className={classes.commentData}>
+                    <Typography
+                      variant="h5"
+                      component={Link}
+                      to={`users/${comment.user._id}`}
+                      color="primary"
+                    >
+                      {comment.user.name}
+                    </Typography>
 
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                  >
-                    {dayjs(comment.createdAt).format('h:mm a, MMMM DD YYYY')}
-                  </Typography>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                    >
+                      {dayjs(comment.createdAt).format('h:mm a, MMMM DD YYYY')}
+                    </Typography>
 
-                  <hr className='visibleSeparator' style={{marginBottom: 0}}/>
-
-                  <Typography
-                    variant="body1"
-                  >
-                    {comment.body}
-                  </Typography>
-                </div>
+                    <hr className='visibleSeparator' style={{marginBottom: 0}}/>
+                    <Typography variant="body1">{comment.body}</Typography>
+                  </div>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        // {(index !== comments.length-1) && <hr className="visibleSeparator"/>}
-        )
-
-      })}
+          )
+        }
+      )}
     </Grid>
   );
 };

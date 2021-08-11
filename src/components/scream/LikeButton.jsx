@@ -27,10 +27,10 @@ const LikeButton = ({scream}) => {
   }
 
   const handleUnlikeScream = () => {
-    dispatch(unlikeScream(scream._id))
+    dispatch(unlikeScream(scream._id));
   }
 
-  const likeButton = !user.authenticated ? (
+  return !user.authenticated ? (
     <Link to="/login">
       <MyButton tip="Like">
         <FavoriteBorder color="primary"/>
@@ -46,9 +46,7 @@ const LikeButton = ({scream}) => {
         <FavoriteBorder color="primary"/>
       </MyButton>
     )
-  );
-
-  return likeButton
+  )
 };
 
 export default LikeButton;

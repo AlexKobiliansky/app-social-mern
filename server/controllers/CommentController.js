@@ -8,7 +8,6 @@ class CommentController {
       body: req.body.body
     };
 
-
     const comment = new CommentModel(postData);
 
     comment
@@ -26,7 +25,6 @@ class CommentController {
         });
       });
   }
-
 }
 
 module.exports= new CommentController();

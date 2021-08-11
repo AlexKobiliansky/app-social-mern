@@ -33,9 +33,9 @@ const useStyles = makeStyles({
 const PostScream = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const {errors, isLoading} = useSelector(({UI}) => UI);
   const [open, setOpen] = useState(false);
   const [bodyScream, setBodyScream] = useState('');
-  const {errors, isLoading} = useSelector(({UI}) => UI);
 
   useEffect(() => {
     if (errors === null) {
@@ -62,7 +62,6 @@ const PostScream = () => {
     dispatch(postScream({body: bodyScream}, handleClose));
     setBodyScream('');
   }
-
 
   const createScreamSocket = (data) => {
     dispatch(postScreamAC(data));
@@ -104,7 +103,6 @@ const PostScream = () => {
               name="body"
               type="text"
               label="SCREAM!!"
-              multiline
               rows="3"
               placeholder="Scream at your frends"
               error={!!errors?.msg}
@@ -112,6 +110,7 @@ const PostScream = () => {
               className={classes.textField}
               onChange={handleChange}
               value={bodyScream}
+              multiline
               fullWidth
             />
             <Button

@@ -54,16 +54,14 @@ const ScreamDialog = ({screamId, userId, openDialog}) => {
   const [oldPath, setOldPath] = useState(window.location.pathname);
 
   useEffect(() => {
-    if (openDialog) {
-      handleOpen()
-    } // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    if (openDialog) handleOpen();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleOpen = () => {
     const newPath = `/users/${userId}/screams/${screamId}`;
 
     if (oldPath === newPath) setOldPath(`/users/${userId}`);
-
     window.history.pushState(null, null, newPath);
 
     setOpen(true);
@@ -71,7 +69,7 @@ const ScreamDialog = ({screamId, userId, openDialog}) => {
   }
 
   const handleClose = () => {
-    window.history.pushState(null, null, oldPath)
+    window.history.pushState(null, null, oldPath);
     setOpen(false);
     dispatch(clearErrors())
   }
@@ -103,11 +101,7 @@ const ScreamDialog = ({screamId, userId, openDialog}) => {
           {dayjs(scream?.createdAt).format('h:mm a, MMMM DD YYYY')}
         </Typography>
         <hr className='invisibleSeparator'/>
-        <Typography
-          variant="body1"
-        >
-          {scream?.body}
-        </Typography>
+        <Typography variant="body1">{scream?.body}</Typography>
         <LikeButton scream={scream}/>
         <span>{scream?.likesCount} Likes</span>
         <MyButton tip="comments">

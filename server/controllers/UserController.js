@@ -1,14 +1,13 @@
 const UserModel = require('../models/User');
 const LikeModel = require('../models/Like');
 const ScreamModel = require('../models/Scream');
+const createJWToken = require("../utils/createJWToken");
 const {validationResult} = require('express-validator');
 const bcrypt = require('bcrypt');
-const createJWToken = require("../utils/createJWToken");
 const config = require('config');
 const Uuid = require('uuid');
 
 class UserController {
-
   register = (req, res) => {
     const postData = {
       name: req.body.name,
@@ -17,7 +16,6 @@ class UserController {
     }
 
     const confirmPassword = req.body.confirmPassword;
-
     const errors = validationResult(req);
 
     if (postData.password !== confirmPassword) errors.errors.push({
@@ -36,7 +34,7 @@ class UserController {
     const user = new UserModel(postData);
     const token = createJWToken(user);
 
-    user.save().then((obj) => {
+    user.save().then(() => {
       return res.status(201).json({
         status: 'success',
         token
@@ -81,7 +79,7 @@ class UserController {
           status: 'error',
           msg: 'incorrect password or email',
           param: 'authError'
-        }])
+        }]);
       }
     });
   }
@@ -101,19 +99,19 @@ class UserController {
         .sort({createdAt: -1})
         .populate('user')
         .exec((err, screams) => {
-        if (err) {
-          return res.status(404).json([{
-            status: 'error',
-            msg: 'Error during executing users screams',
-          }]);
-        }
+          if (err) {
+            return res.status(404).json([{
+              status: 'error',
+              msg: 'Error during executing users screams',
+            }]);
+          }
 
-        return res.json({
-          user: user,
-          screams: screams
+          return res.json({
+            user: user,
+            screams: screams
+          });
         });
-      });
-    })
+    });
   }
 
   getUserDetails = (req, res) => {
@@ -177,7 +175,7 @@ class UserController {
       const file = req.files.image;
       const extension = file.name.split('.')[file.name.split('.').length - 1];
 
-      if(file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') {
+      if (file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') {
         return res.status(400).json({
           status: 'error',
           message: 'Wrong file type submitted'
@@ -190,12 +188,10 @@ class UserController {
       user.imageUrl = imageName;
       await user.save();
       return res.json(user);
-    } catch(e) {
+    } catch (e) {
       return res.status(500).json({message: 'Upload image error'});
     }
   }
-
-
 }
 
 module.exports = new UserController();

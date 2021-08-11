@@ -21,7 +21,7 @@ export const getScreams = () => dispatch => {
         payload: data
       });
     })
-    .catch(err => {
+    .catch(() => {
       dispatch({
         type: SET_SCREAMS,
         payload: []
@@ -33,10 +33,6 @@ export const postScream = (newScream, handleClose) => dispatch => {
   dispatch({type: LOADING_UI});
   instance.post(`/screams`, newScream)
     .then(() => {
-      // dispatch({
-      //   type: POST_SCREAM,
-      //   payload: data
-      // });
       dispatch(clearErrors());
       handleClose();
     })
@@ -72,11 +68,8 @@ export const unlikeScream = (screamId) => dispatch => {
     .catch(err => console.log(err));
 }
 
-export const deleteScream = (screamId) => dispatch => {
+export const deleteScream = (screamId) => () => {
   instance.delete(`/screams/${screamId}`)
-    .then(() => {
-      // dispatch({type: DELETE_SCREAM, payload: screamId})
-    })
     .catch(err => console.log(err));
 }
 
@@ -120,9 +113,8 @@ export const getUserData = (userId) => dispatch => {
       dispatch({
         type: SET_SCREAMS,
         payload: null
-      })
-    })
-
+      });
+    });
 }
 
 export const clearErrors = () => dispatch => {

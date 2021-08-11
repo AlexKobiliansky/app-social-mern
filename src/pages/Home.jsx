@@ -14,7 +14,7 @@ const Home = () => {
   const {screams, isLoading} = useSelector(({data}) => data);
 
   useEffect(() => {
-    dispatch(getScreams()) // eslint-disable-next-line react-hooks/exhaustive-deps
+    dispatch(getScreams()); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const newLikeOnScreamSocket = (data) => {
@@ -22,7 +22,7 @@ const Home = () => {
   }
 
   const handleNotificationSocket = () => {
-    dispatch(getUserNotifications())
+    dispatch(getUserNotifications());
   }
 
   const newCommentOnScreamSocket = (data) => {

@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
-const { reduce } = require("lodash");
 const config = require('config');
+const {reduce} = require("lodash");
 
 module.exports = (user) => {
-  let token = jwt.sign(
+  return jwt.sign(
     {
       data: reduce(
         user,
@@ -22,6 +22,4 @@ module.exports = (user) => {
       algorithm: "HS256"
     }
   );
-
-  return token;
 };

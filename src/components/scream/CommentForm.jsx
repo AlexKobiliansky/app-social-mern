@@ -3,9 +3,8 @@ import {makeStyles} from "@material-ui/core/styles";
 import Button from '@material-ui/core/Button';
 import {Grid} from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
-import {submitComment, submitCommentAC} from "../../redux/actions/dataActions";
+import {submitComment} from "../../redux/actions/dataActions";
 import {useDispatch, useSelector} from "react-redux";
-import socket from "../../utils/socket";
 
 const useStyles = makeStyles({
   textField: {
@@ -15,10 +14,10 @@ const useStyles = makeStyles({
 
 const CommentForm = ({screamId, recipientId}) => {
   const classes = useStyles();
-  const [body, setBody] = useState('');
+  const dispatch = useDispatch();
   const {errors} = useSelector(({UI}) => UI);
   const {authenticated, credentials} = useSelector(({user}) => user);
-  const dispatch = useDispatch();
+  const [body, setBody] = useState('');
 
   useEffect(() => {
     if (errors === null) {
@@ -30,7 +29,7 @@ const CommentForm = ({screamId, recipientId}) => {
     setBody(e.target.value)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     const notificationData = {
       recipient: recipientId,
@@ -40,14 +39,11 @@ const CommentForm = ({screamId, recipientId}) => {
       read: false
     }
 
-    dispatch(submitComment(screamId, {body: body}, notificationData))
+    dispatch(submitComment(screamId, {body: body}, notificationData));
     setBody('');
   }
 
-
-
-
-  const commentFormMarkup = authenticated ? (
+  return authenticated ? (
     <Grid item sm={12} style={{textAlign: 'center'}}>
       <form onSubmit={handleSubmit}>
         <TextField
@@ -65,17 +61,12 @@ const CommentForm = ({screamId, recipientId}) => {
           type="submit"
           variant="contained"
           color="primary"
-          className={classes.button}
         >
           Submit
         </Button>
       </form>
-      <hr className="visibleSeparator"/>
     </Grid>
-  ) : null
-
-
-  return commentFormMarkup;
+  ) : null;
 };
 
 export default CommentForm;

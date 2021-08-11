@@ -18,7 +18,6 @@ import {instance} from "./api";
 import User from "./pages/User";
 
 const theme = createTheme(themeFile);
-
 const token = localStorage.socMernToken;
 
 if (token) {
@@ -32,7 +31,6 @@ if (token) {
     store.dispatch(getUserData());
   }
 }
-
 
 function App() {
   return (
@@ -50,7 +48,6 @@ function App() {
           </Switch>
         </div>
       </Provider>
-
     </ThemeProvider>
   );
 }

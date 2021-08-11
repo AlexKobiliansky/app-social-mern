@@ -3,7 +3,6 @@ const CommentModel = require('../models/Comment');
 const LikeModel = require('../models/Like');
 
 class ScreamController {
-
   io;
 
   constructor(io) {
@@ -149,7 +148,7 @@ class ScreamController {
       LikeModel
         .find({scream: screamId, user: userId}).limit(1)
         .lean()
-        .exec( (err, likes) => {
+        .exec((err, likes) => {
           if (likes.length) {
             return res.status(400).json({
               status: 'error',
@@ -181,8 +180,7 @@ class ScreamController {
           });
 
           newLike
-            .save( (err, newLike) => {
-
+            .save((err, newLike) => {
               if (err) {
                 return res.status(500).json({
                   status: 'error',
@@ -192,7 +190,6 @@ class ScreamController {
 
               scream
                 .populate('user').execPopulate().then(() => {
-
                 CommentModel.find({scream: screamId})
                   .populate('user')
                   .exec((err, comments) => {
@@ -211,9 +208,6 @@ class ScreamController {
                       comments: comments
                     });
                   });
-
-
-                // res.json(scream.populate(['user']));
               })
                 .catch(err => {
                   res.status(500).json({
@@ -222,12 +216,8 @@ class ScreamController {
                   });
                 })
             });
-
-
         });
     });
-
-
   }
 
   unlikeScream = (req, res) => {
@@ -263,7 +253,6 @@ class ScreamController {
               });
             }
           });
-
 
           like.remove((err, newLike) => {
             scream.populate('user').execPopulate().then(() => {
@@ -319,7 +308,6 @@ class ScreamController {
           status: 'success',
           message: 'Scream deleted'
         });
-
       } else {
         return res.status(404).json({
           status: 'success',

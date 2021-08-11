@@ -44,7 +44,6 @@ const useStyles = makeStyles({
 });
 
 const StaticProfile = ({profile}) => {
-
   const classes = useStyles();
   return (
     <Paper className={classes.paper}>
@@ -81,7 +80,6 @@ const StaticProfile = ({profile}) => {
             {' '}
             <span>Joined {dayjs(profile.createdAt).format('MMM YYYY')}</span>
           </>}
-
           <hr/>
         </div>
       </div>

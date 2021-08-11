@@ -10,9 +10,9 @@ import ProfileSkeleton from "../utils/Skeletons/ProfileSkeleton";
 
 const User = (props) => {
   const dispatch = useDispatch();
+  const {screams, isLoading} = useSelector(({data}) => data);
   const [profile, setProfile] = useState(null);
   const [screamIdParam, setScreamIdParam] = useState(null);
-  const {screams, isLoading} = useSelector(({data}) => data);
 
   useEffect(() => {
     const screamId = props.match.params.screamId;
@@ -45,7 +45,6 @@ const User = (props) => {
         else
           return <Scream key={scream._id} scream={scream} openDialog/>
       }
-
     })
   )
 

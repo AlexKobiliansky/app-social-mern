@@ -12,11 +12,11 @@ import logo from '../images/logo.png'
 import {useDispatch, useSelector} from "react-redux";
 
 const Login = () => {
-  const [emailValue, setEmailValue] = useState('');
-  const [passwordValue, setPasswordValue] = useState('');
-  const history = useHistory();
   const dispatch = useDispatch();
   const {errors, isLoading} = useSelector(({UI}) => UI);
+  const history = useHistory();
+  const [emailValue, setEmailValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
 
   const handleSubmit = () => {
     dispatch(loginUser({
@@ -69,8 +69,12 @@ const Login = () => {
           />
 
           {errors?.filter(error => error.param === 'authError')[0] && (
-            <Typography variant="body2"
-                        className="customError">{errors?.filter(error => error.param === 'authError')[0].msg}</Typography>
+            <Typography
+              variant="body2"
+              className="customError"
+            >
+              {errors?.filter(error => error.param === 'authError')[0].msg}
+            </Typography>
           )}
           <Button
             variant="contained"

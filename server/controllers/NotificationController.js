@@ -1,5 +1,4 @@
 const NotificationModel = require('../models/Notification');
-const socket = require("socket.io");
 
 class NotificationController {
   io;
@@ -35,7 +34,7 @@ class NotificationController {
       read: false
     };
 
-    if(postData.recipient === postData.sender) return null;
+    if (postData.recipient === postData.sender) return null;
 
     const notification = new NotificationModel(postData);
 
@@ -58,26 +57,7 @@ class NotificationController {
     NotificationModel.find()
       .where('_id')
       .in(ids)
-      .updateMany({}, { $set: { read: true } })
-      .exec((err, notifications) => {
-        if (err) {
-          return res.status(500).json(err);
-        }
-
-        res.json({
-          status: 'success',
-          message: 'updated'
-        });
-    });
-  }
-
-  markAsUnread = (req, res) => {
-    const ids = req.body.ids;
-
-    NotificationModel.find()
-      .where('_id')
-      .in(ids)
-      .updateMany({}, { $set: { read: false } })
+      .updateMany({}, {$set: {read: true}})
       .exec((err, notifications) => {
         if (err) {
           return res.status(500).json(err);
@@ -90,8 +70,24 @@ class NotificationController {
       });
   }
 
+  markAsUnread = (req, res) => {
+    const ids = req.body.ids;
 
+    NotificationModel.find()
+      .where('_id')
+      .in(ids)
+      .updateMany({}, {$set: {read: false}})
+      .exec((err, notifications) => {
+        if (err) {
+          return res.status(500).json(err);
+        }
 
+        res.json({
+          status: 'success',
+          message: 'updated'
+        });
+      });
+  }
 }
 
 module.exports = NotificationController;

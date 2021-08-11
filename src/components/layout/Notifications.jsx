@@ -17,9 +17,9 @@ import ChatIcon from '@material-ui/icons/Chat';
 import {useDispatch, useSelector} from "react-redux";
 
 const Notifications = () => {
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const {notifications} = useSelector(({notifications}) => notifications);
-  const dispatch = useDispatch();
 
   const handleOpen = (e) => {
     setAnchorEl(e.currentTarget);

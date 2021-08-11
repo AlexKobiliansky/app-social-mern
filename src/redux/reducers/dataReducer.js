@@ -1,12 +1,13 @@
 import {
-  SET_SCREAMS,
-  LIKE_SCREAM,
-  UNLIKE_SCREAM,
-  LOADING_DATA,
   DELETE_SCREAM,
+  LIKE_SCREAM,
+  LOADING_DATA,
   POST_SCREAM,
   SET_SCREAM,
-  SUBMIT_COMMENT, UPDATE_LIKES_ON_SCREAM
+  SET_SCREAMS,
+  SUBMIT_COMMENT,
+  UNLIKE_SCREAM,
+  UPDATE_LIKES_ON_SCREAM
 } from "../types";
 
 const initialState = {
@@ -49,18 +50,15 @@ const initialState = {
       }
     }
     case UPDATE_LIKES_ON_SCREAM:
-      console.log('update likes on scream', action.payload);
       return {
         ...state,
         screams: state.screams.map(scream => {
           if (scream._id !== action.payload._id) return scream;
 
-          const updatedScream = {
+          return {
             ...scream,
             likesCount: action.payload.likesCount
-          }
-
-          return updatedScream;
+          };
         }),
         scream: {
           ...state.scream,
@@ -86,7 +84,6 @@ const initialState = {
         ...state,
         screams: state.screams.map(scream => {
           if ( scream._id !== action.payload.scream._id) return scream;
-          console.log(action.payload.scream._id)
           return {
             ...scream,
             commentsCount: scream.commentsCount + 1}

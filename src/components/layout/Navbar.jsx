@@ -14,8 +14,7 @@ const Navbar = () => {
   return (
     <AppBar>
       <Toolbar className="nav-container">
-        {
-          authenticated ? (
+        { authenticated ? (
             <>
               <PostScream />
 
@@ -33,8 +32,7 @@ const Navbar = () => {
               <Button color="inherit" component={Link} to="/">Home</Button>
               <Button color="inherit" component={Link} to="/signup">Signup</Button>
             </>
-          )
-        }
+          )}
       </Toolbar>
     </AppBar>
   );

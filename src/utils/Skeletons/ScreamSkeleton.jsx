@@ -62,11 +62,7 @@ const ScreamSkeleton = () => {
     </Card>
   ))
 
-  return (
-    <>
-      {content}
-    </>
-  );
+  return {content}
 };
 
 export default ScreamSkeleton;

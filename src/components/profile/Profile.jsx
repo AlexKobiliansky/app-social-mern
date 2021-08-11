@@ -67,11 +67,11 @@ const useStyles = makeStyles({
 });
 
 const Profile = () => {
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const authenticated = useSelector(({user}) => user.authenticated);
   const user = useSelector(({user}) => user.credentials);
   const isLoading = useSelector(({user}) => user.isLoading);
-  const classes = useStyles();
-  const authenticated = useSelector(({user}) => user.authenticated);
-  const dispatch = useDispatch();
 
   const handleImageChange = (e) => {
     const image = e.target.files[0];

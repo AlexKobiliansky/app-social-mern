@@ -2,10 +2,10 @@ const {model, Schema} = require('mongoose');
 const isEmail = require('validator/lib/isEmail');
 
 const UserSchema = new Schema({
-  name: {
-    type: String,
-    required: 'Name is required!',
-  },
+    name: {
+      type: String,
+      required: 'Name is required!',
+    },
     email: {
       type: String,
       required: 'Email address is required!',
@@ -20,9 +20,9 @@ const UserSchema = new Schema({
       type: String,
       default: 'no-avatar.png'
     },
-  bio: String,
-  website: String,
-  location: String
+    bio: String,
+    website: String,
+    location: String
   }, {
     timestamps: true,
   }

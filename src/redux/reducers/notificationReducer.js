@@ -20,14 +20,6 @@ function notificationReducer(state = initialState, action) {
         ...state,
         notifications: []
       }
-    // case CREATE_NOTIFICATION:
-    //   return {
-    //     ...state,
-    //     notifications: [
-    //       action.payload,
-    //       ...state.notifications
-    //     ]
-    //   }
     case MARK_NOTIFICATIONS_READ:
       state.notifications.forEach(not => not.read = true);
       return {

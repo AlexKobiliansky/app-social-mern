@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
 import {editUserDetails} from "../../redux/actions/userActions";
 import {useDispatch, useSelector} from "react-redux";
 import EditIcon from '@material-ui/icons/Edit';
@@ -11,20 +10,15 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import MyButton from "../../utils/MyButton";
 
-const useStyles = makeStyles({
-
-});
-
 const EditDetails = () => {
-  const classes = useStyles();
+  const dispatch = useDispatch();
+  const credentials = useSelector(({user}) => user.credentials);
   const [formData, setFormData] = useState({
     bio: '',
     website: '',
     location: ''
   });
   const [openDialog, setOpenDialog] = useState(false);
-  const credentials = useSelector(({user}) => user.credentials);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     setFormData({
@@ -47,7 +41,6 @@ const EditDetails = () => {
       ...formData,
       [e.target.name]: e.target.value
     });
-
   }
 
   const handleSubmit = () => {
@@ -63,7 +56,7 @@ const EditDetails = () => {
 
   return (
     <>
-      <MyButton tip="Edit details" onClick={handleOpen} btnClassName={classes.button}>
+      <MyButton tip="Edit details" onClick={handleOpen} btnClassName="button">
         <EditIcon color="primary" />
       </MyButton>
 
@@ -83,7 +76,7 @@ const EditDetails = () => {
               multiline
               rows="3"
               placeholder="A short bio about yourself"
-              className={classes.textField}
+              className="textField"
               value={formData.bio}
               onChange={handleChangeForm}
               fullWidth
@@ -94,7 +87,7 @@ const EditDetails = () => {
               type="text"
               label="Website"
               placeholder="Your personal website"
-              className={classes.textField}
+              className="textField"
               value={formData.website}
               onChange={handleChangeForm}
               fullWidth
@@ -105,7 +98,7 @@ const EditDetails = () => {
               type="text"
               label="Location"
               placeholder="Where are you from"
-              className={classes.textField}
+              className="textField"
               value={formData.location}
               onChange={handleChangeForm}
               fullWidth
@@ -113,13 +106,8 @@ const EditDetails = () => {
           </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-
-          <Button onClick={handleSubmit} color="primary">
-            Save
-          </Button>
+          <Button onClick={handleClose} color="primary">Cancel</Button>
+          <Button onClick={handleSubmit} color="primary">Save</Button>
         </DialogActions>
       </Dialog>
     </>
