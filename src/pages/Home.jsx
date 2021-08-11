@@ -8,7 +8,7 @@ import ScreamSkeleton from "../utils/Skeletons/ScreamSkeleton";
 import {getUserNotifications} from "../redux/actions/notificationActions";
 import socket from "../utils/socket";
 import {UPDATE_LIKES_ON_SCREAM, NEW_NOTIFICATION} from "../redux/types";
-
+ 
 const Home = () => {
   const dispatch = useDispatch();
   const {screams, isLoading} = useSelector(({data}) => data);
@@ -41,7 +41,7 @@ const Home = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
+
   let recentScreamsMarkup = screams?.map(scream => <Scream key={scream._id} scream={scream}/>);
   return (
     <Grid container spacing={8}>
