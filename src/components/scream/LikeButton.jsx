@@ -5,8 +5,6 @@ import {FavoriteBorder} from "@material-ui/icons";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import {useDispatch, useSelector} from "react-redux";
 import {likeScream, unlikeScream} from "../../redux/actions/dataActions";
-import {getUserNotifications} from "../../redux/actions/notificationActions";
-import socket from '../../utils/socket';
 
 const LikeButton = ({scream}) => {
   const dispatch = useDispatch();
@@ -32,19 +30,6 @@ const LikeButton = ({scream}) => {
     dispatch(unlikeScream(scream._id))
   }
 
-  // const handleLikeSocket = () => {
-  //   dispatch(getUserNotifications())
-  // }
-  //
-  // useEffect(() => {
-  //   socket.on('NEW_NOTIFICATION', handleLikeSocket)
-  //
-  //   return () => {
-  //     socket.removeListener('NEW_NOTIFICATION', handleLikeSocket)
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
   const likeButton = !user.authenticated ? (
     <Link to="/login">
       <MyButton tip="Like">
@@ -62,7 +47,6 @@ const LikeButton = ({scream}) => {
       </MyButton>
     )
   );
-
 
   return likeButton
 };

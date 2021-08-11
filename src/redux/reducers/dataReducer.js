@@ -14,6 +14,7 @@ const initialState = {
   scream: {
     comments: []
   },
+  currentScreamComments: [],
   isLoading: false
 };
 
@@ -31,22 +32,25 @@ const initialState = {
         isLoading: false
       }
     case SET_SCREAM:
+      console.log('set scream', action.payload)
       return {
         ...state,
-        scream: action.payload
+        scream: action.payload.scream,
+        currentScreamComments: action.payload.comments
       }
     case LIKE_SCREAM:
     case UNLIKE_SCREAM: {
-      let index = state.screams.findIndex((scream) => scream._id === action.payload._id);
-      state.screams[index] = action.payload;
-      if(state.scream._id === action.payload._id) {
-        state.scream = action.payload
+      let index = state.screams.findIndex((scream) => scream._id === action.payload.scream._id);
+      state.screams[index] = action.payload.scream;
+      if(state.scream._id === action.payload.scream._id) {
+        state.scream = action.payload.scream
       }
       return {
         ...state,
       }
     }
     case UPDATE_LIKES_ON_SCREAM:
+      console.log('update likes on scream', action.payload);
       return {
         ...state,
         screams: state.screams.map(scream => {
@@ -85,9 +89,13 @@ const initialState = {
         }),
         scream: {
           ...state.scream,
-          comments: [...state.scream.comments, action.payload.comment],
+          // comments: [...state.scream.comments, action.payload.comment],
           commentsCount: state.scream.commentsCount + 1
-        }
+        },
+        currentScreamComments: [
+          ...state.currentScreamComments,
+          action.payload.comment
+        ]
       }
     default:
       return state;

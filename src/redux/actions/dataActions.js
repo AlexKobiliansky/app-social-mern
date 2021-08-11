@@ -102,6 +102,8 @@ export const submitComment = (screamId, commentData, notificationData) => dispat
       //   type: SUBMIT_COMMENT,
       //   payload: data
       // });
+      console.log('commentData', commentData)
+      console.log('notificationData', notificationData)
       dispatch(clearErrors());
       dispatch(createNotification(notificationData));
     })

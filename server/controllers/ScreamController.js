@@ -59,7 +59,6 @@ class ScreamController {
     const id = req.params.id;
     ScreamModel.findById(id)
       .populate('user')
-      .lean()
       .exec(function (err, scream) {
         if (err) {
           return res.status(404).json({
@@ -78,11 +77,10 @@ class ScreamController {
               }]);
             }
 
-            if (scream) {
-              scream['comments'] = comments;
-            }
-
-            return res.json(scream);
+            return res.json({
+              scream: scream,
+              comments: comments
+            });
           });
       });
   }
@@ -126,7 +124,6 @@ class ScreamController {
               }
               this.io.emit('NEW_COMMENT_ON_SCREAM', result);
               res.json(result);
-
             })
         })
         .catch(err => {
@@ -148,7 +145,6 @@ class ScreamController {
           message: 'Not found scream'
         });
       }
-
 
       LikeModel
         .find({scream: screamId, user: userId}).limit(1)
@@ -184,25 +180,6 @@ class ScreamController {
             scream: screamId
           });
 
-          // CommentModel.find({scream: screamId})
-          //   .populate('user')
-          //   .exec((err, comments) => {
-          //     if (err) {
-          //       return res.status(404).json([{
-          //         status: 'error',
-          //         msg: 'Error during executing scream comments',
-          //         param: 'commentError'
-          //       }]);
-          //     }
-          //
-          //     if (scream) {
-          //       scream['comments'] = comments;
-          //     }
-          //
-          //     console.log('here', scream);
-          //
-          //   })
-
           newLike
             .save( (err, newLike) => {
 
@@ -213,13 +190,30 @@ class ScreamController {
                 });
               }
 
-              scream['comments'] = 2;
-
               scream
                 .populate('user').execPopulate().then(() => {
-                this.io.emit('UPDATE_LIKES_ON_SCREAM', scream.populate(['user']));
-                console.log(scream.populate(['user']))
-                res.json(scream.populate(['user']));
+
+                CommentModel.find({scream: screamId})
+                  .populate('user')
+                  .exec((err, comments) => {
+                    if (err) {
+                      return res.status(404).json([{
+                        status: 'error',
+                        msg: 'Error during executing scream comments',
+                        param: 'commentError'
+                      }]);
+                    }
+
+                    this.io.emit('UPDATE_LIKES_ON_SCREAM', scream.populate(['user']));
+
+                    return res.json({
+                      scream: scream,
+                      comments: comments
+                    });
+                  });
+
+
+                // res.json(scream.populate(['user']));
               })
                 .catch(err => {
                   res.status(500).json({
@@ -273,8 +267,25 @@ class ScreamController {
 
           like.remove((err, newLike) => {
             scream.populate('user').execPopulate().then(() => {
-              this.io.emit('UPDATE_LIKES_ON_SCREAM', scream.populate(['user']));
-              return res.json(scream.populate(['user']));
+
+              CommentModel.find({scream: screamId})
+                .populate('user')
+                .exec((err, comments) => {
+                  if (err) {
+                    return res.status(404).json([{
+                      status: 'error',
+                      msg: 'Error during executing scream comments',
+                      param: 'commentError'
+                    }]);
+                  }
+
+                  this.io.emit('UPDATE_LIKES_ON_SCREAM', scream.populate(['user']));
+
+                  return res.json({
+                    scream: scream,
+                    comments: comments
+                  });
+                });
             })
               .catch(err => {
                 return res.json({

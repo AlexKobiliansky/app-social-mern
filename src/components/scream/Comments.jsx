@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import {Link} from "react-router-dom";
 import dayjs from "dayjs";
 import {API_URL} from "../../config";
+import {useDispatch, useSelector} from "react-redux";
 
 const useStyles = makeStyles({
   commentImage: {
@@ -19,11 +20,12 @@ const useStyles = makeStyles({
   }
 });
 
-const Comments = ({comments}) => {
+const Comments = () => {
   const classes = useStyles();
+  const comments = useSelector(({data}) => data.currentScreamComments);
   return (
     <Grid container>
-      {comments.map((comment, index) => {
+      {comments?.map((comment, index) => {
         return (
           <Grid item sm={12} key={comment._id}>
             <Grid container>

@@ -47,6 +47,30 @@ const CommentForm = ({screamId, recipientId}) => {
     setBody('');
   }
 
+
+  const newCommentOnScreamSocket = (data) => {
+    console.log('dispatch comment', data)
+    dispatch({
+      type: SUBMIT_COMMENT,
+      payload: data
+    });
+  }
+
+  useEffect(() => {
+    // socket.on('NEW_NOTIFICATION', handleCommentSocket)
+    socket.on('NEW_COMMENT_ON_SCREAM', (data) => newCommentOnScreamSocket(data))
+    // socket.on('UPDATE_LIKES_ON_SCREAM', (data) => newLikeOnScreamSocket(data))
+    // socket.on('NEW_NOTIFICATION', handleNotificationSocket)
+
+    return () => {
+      // socket.removeAllListeners()
+      socket.off('NEW_COMMENT_ON_SCREAM');
+      // socket.removeListener('UPDATE_LIKES_ON_SCREAM', newLikeOnScreamSocket)
+      // socket.removeListener('NEW_NOTIFICATION', handleNotificationSocket)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const commentFormMarkup = authenticated ? (
     <Grid item sm={12} style={{textAlign: 'center'}}>
       <form onSubmit={handleSubmit} style={{marginTop: 25}}>

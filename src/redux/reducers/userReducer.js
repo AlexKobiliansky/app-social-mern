@@ -42,14 +42,14 @@ function userReducer(state = initialState, action) {
           ...state.likes,
           {
             user: state.credentials._id,
-            scream: action.payload._id
+            scream: action.payload.scream._id
           }
         ]
       }
     case UNLIKE_SCREAM:
       return {
         ...state,
-        likes: state.likes.filter(like => like.scream !== action.payload._id)
+        likes: state.likes.filter(like => like.scream !== action.payload.scream._id)
       }
     default:
       return state;

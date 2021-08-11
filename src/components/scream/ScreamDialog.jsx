@@ -116,7 +116,7 @@ const ScreamDialog = ({screamId, userId, openDialog}) => {
         <span>{scream?.commentsCount} comments</span>
       </Grid>
       <hr className='visibleSeparator'/>
-      <Comments comments={scream?.comments}/>
+      <Comments/>
       <CommentForm screamId={screamId} recipientId={userId}/>
     </Grid>
   )
