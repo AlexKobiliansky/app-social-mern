@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import MyButton from "../../utils/MyButton";
 import {Link} from "react-router-dom";
 import {FavoriteBorder} from "@material-ui/icons";

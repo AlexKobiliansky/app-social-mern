@@ -7,9 +7,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
 import {DeleteOutline} from "@material-ui/icons";
 
-import {deleteScream} from '../../redux/actions/dataActions';
+import {deleteScream, deleteScreamAC} from '../../redux/actions/dataActions';
 import {useDispatch} from "react-redux";
-import {getUserNotifications} from "../../redux/actions/notificationActions";
 import socket from "../../utils/socket";
 import {DELETE_SCREAM} from "../../redux/types";
 
@@ -40,15 +39,11 @@ const DeleteScream = ({screamId}) => {
   }
 
   const handleDeleteSocket = (screamId) => {
-    dispatch(deleteScream(screamId));
+    dispatch(deleteScreamAC(screamId));
   }
 
   useEffect(() => {
-    socket.on('DELETE_SCREAM', (screamId) => handleDeleteSocket(screamId))
-
-    return () => {
-      socket.off('DELETE_SCREAM');
-    }
+    socket.on(DELETE_SCREAM, (screamId) => handleDeleteSocket(screamId))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

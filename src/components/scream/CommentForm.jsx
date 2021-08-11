@@ -6,9 +6,6 @@ import TextField from '@material-ui/core/TextField';
 import {submitComment, submitCommentAC} from "../../redux/actions/dataActions";
 import {useDispatch, useSelector} from "react-redux";
 import socket from "../../utils/socket";
-import {getUserNotifications} from "../../redux/actions/notificationActions";
-import {POST_SCREAM, SUBMIT_COMMENT} from "../../redux/types";
-
 
 const useStyles = makeStyles({
   textField: {
@@ -48,28 +45,11 @@ const CommentForm = ({screamId, recipientId}) => {
   }
 
 
-  const newCommentOnScreamSocket = (data) => {
-    dispatch(submitCommentAC(data));
-  }
 
-  useEffect(() => {
-    // socket.on('NEW_NOTIFICATION', handleCommentSocket)
-    socket.on('NEW_COMMENT_ON_SCREAM', (data) => newCommentOnScreamSocket(data))
-    // socket.on('UPDATE_LIKES_ON_SCREAM', (data) => newLikeOnScreamSocket(data))
-    // socket.on('NEW_NOTIFICATION', handleNotificationSocket)
-
-    return () => {
-      // socket.removeAllListeners()
-      socket.off('NEW_COMMENT_ON_SCREAM');
-      // socket.removeListener('UPDATE_LIKES_ON_SCREAM', newLikeOnScreamSocket)
-      // socket.removeListener('NEW_NOTIFICATION', handleNotificationSocket)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const commentFormMarkup = authenticated ? (
     <Grid item sm={12} style={{textAlign: 'center'}}>
-      <form onSubmit={handleSubmit} style={{marginTop: 25}}>
+      <form onSubmit={handleSubmit}>
         <TextField
           name="body"
           type="text"

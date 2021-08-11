@@ -12,8 +12,7 @@ import {CircularProgress} from "@material-ui/core";
 import {postScream, postScreamAC} from "../../redux/actions/dataActions";
 import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch, useSelector} from "react-redux";
-import {CLEAR_ERRORS, POST_SCREAM} from "../../redux/types";
-import {getUserNotifications} from "../../redux/actions/notificationActions";
+import {CLEAR_ERRORS} from "../../redux/types";
 import socket from "../../utils/socket";
 
 const useStyles = makeStyles({

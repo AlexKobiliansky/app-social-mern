@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import {Link} from "react-router-dom";
 import dayjs from "dayjs";
 import {API_URL} from "../../config";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 
 const useStyles = makeStyles({
   commentImage: {
@@ -17,6 +17,9 @@ const useStyles = makeStyles({
   },
   commentData: {
     marginLeft: 20
+  },
+  comment: {
+    marginBottom: 20
   }
 });
 
@@ -27,7 +30,7 @@ const Comments = () => {
     <Grid container>
       {comments?.map((comment, index) => {
         return (
-          <Grid item sm={12} key={comment._id}>
+          <Grid item sm={12} key={comment._id} className={classes.comment}>
             <Grid container>
               <Grid item sm={2}>
                 <img src={`${API_URL + comment.user.imageUrl}`} alt="profile" className={classes.commentImage}/>

@@ -32,7 +32,6 @@ const initialState = {
         isLoading: false
       }
     case SET_SCREAM:
-      console.log('set scream', action.payload)
       return {
         ...state,
         scream: action.payload.scream,
@@ -62,7 +61,11 @@ const initialState = {
           }
 
           return updatedScream;
-        })
+        }),
+        scream: {
+          ...state.scream,
+          likesCount: action.payload.likesCount
+        },
       }
 
     case DELETE_SCREAM:
@@ -83,6 +86,7 @@ const initialState = {
         ...state,
         screams: state.screams.map(scream => {
           if ( scream._id !== action.payload.scream._id) return scream;
+          console.log(action.payload.scream._id)
           return {
             ...scream,
             commentsCount: scream.commentsCount + 1}

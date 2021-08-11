@@ -31,13 +31,21 @@ const User = (props) => {
   const screamsMarkup = screams === null ? (
     <p>No screams from this user</p>
   ) : !screamIdParam ? (
-    screams.map(scream => <Scream key={scream._id} scream={scream}/>)
-  ) : (
+    // eslint-disable-next-line array-callback-return
     screams.map(scream => {
-      if (scream._id !== screamIdParam)
-        return <Scream key={scream._id} scream={scream}/>
-      else
-        return <Scream key={scream._id} scream={scream} openDialog/>
+      if (profile?._id === scream.user._id) return <Scream key={scream._id} scream={scream}/>
+    })
+  ) : (
+    // eslint-disable-next-line array-callback-return
+    screams.map(scream => {
+      if (profile?._id === scream.user._id)
+      {
+        if (scream._id !== screamIdParam)
+          return <Scream key={scream._id} scream={scream}/>
+        else
+          return <Scream key={scream._id} scream={scream} openDialog/>
+      }
+
     })
   )
 

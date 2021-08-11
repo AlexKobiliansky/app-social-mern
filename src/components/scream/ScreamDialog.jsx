@@ -82,7 +82,7 @@ const ScreamDialog = ({screamId, userId, openDialog}) => {
     </div>
 
   ) : (
-    <Grid container spacing={16}>
+    <Grid container spacing={1}>
       <Grid item sm={5}>
         <img src={`${API_URL + scream?.user?.imageUrl}`} alt="profile" className={classes.profileImage}/>
       </Grid>

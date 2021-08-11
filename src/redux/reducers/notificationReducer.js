@@ -2,7 +2,6 @@ import {
   CLEAR_NOTIFICATIONS,
   MARK_NOTIFICATIONS_READ,
   SET_NOTIFICATIONS,
-  CREATE_NOTIFICATION
 } from "../types";
 
 const initialState = {
