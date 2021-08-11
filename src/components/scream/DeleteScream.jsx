@@ -40,14 +40,14 @@ const DeleteScream = ({screamId}) => {
   }
 
   const handleDeleteSocket = (screamId) => {
-    dispatch({type: DELETE_SCREAM, payload: screamId});
+    dispatch(deleteScream(screamId));
   }
 
   useEffect(() => {
     socket.on('DELETE_SCREAM', (screamId) => handleDeleteSocket(screamId))
 
     return () => {
-      socket.removeListener('DELETE_SCREAM', handleDeleteSocket)
+      socket.off('DELETE_SCREAM');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

@@ -9,7 +9,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {CircularProgress} from "@material-ui/core";
 
-import {postScream} from "../../redux/actions/dataActions";
+import {postScream, postScreamAC} from "../../redux/actions/dataActions";
 import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {CLEAR_ERRORS, POST_SCREAM} from "../../redux/types";
@@ -66,19 +66,16 @@ const PostScream = () => {
 
 
   const createScreamSocket = (data) => {
-    dispatch({
-      type: POST_SCREAM,
-      payload: data
-    });
+    dispatch(postScreamAC(data));
   }
 
   useEffect(() => {
     socket.on('NEW_SCREAM', (data)=> {
-      createScreamSocket(data)
+      createScreamSocket(data);
     })
 
     return () => {
-      socket.removeListener('NEW_SCREAM', createScreamSocket)
+      socket.off('NEW_SCREAM');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

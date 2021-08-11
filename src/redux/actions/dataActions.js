@@ -7,7 +7,7 @@ import {
   SET_ERRORS,
   CLEAR_ERRORS,
   POST_SCREAM,
-  LOADING_UI, SET_SCREAM, STOP_LOADING_UI, SUBMIT_COMMENT
+  LOADING_UI, SET_SCREAM, STOP_LOADING_UI, SUBMIT_COMMENT, UPDATE_LIKES_ON_SCREAM
 } from '../types';
 import {instance} from "../../api";
 import {createNotification} from "./notificationActions";
@@ -95,15 +95,7 @@ export const getScream = (screamId) => dispatch => {
 
 export const submitComment = (screamId, commentData, notificationData) => dispatch => {
   instance.post(`/screams/${screamId}/comments`, commentData)
-    .then(({data}) => {
-      // console.log('actions', data)
-      // dispatch(submitCommentAC(data));
-      // dispatch({
-      //   type: SUBMIT_COMMENT,
-      //   payload: data
-      // });
-      console.log('commentData', commentData)
-      console.log('notificationData', notificationData)
+    .then(() => {
       dispatch(clearErrors());
       dispatch(createNotification(notificationData));
     })
@@ -139,3 +131,6 @@ export const clearErrors = () => dispatch => {
 
 // actionCreators
 export const submitCommentAC = (data) => ({type: SUBMIT_COMMENT, payload: data});
+export const updateLikesAC = (data) => ({type: UPDATE_LIKES_ON_SCREAM, payload: data});
+export const postScreamAC = (data) => ({type: POST_SCREAM, payload: data});
+export const deleteScreamAC = (id) => ({type: DELETE_SCREAM, payload: id});

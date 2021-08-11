@@ -49,11 +49,7 @@ const CommentForm = ({screamId, recipientId}) => {
 
 
   const newCommentOnScreamSocket = (data) => {
-    console.log('dispatch comment', data)
-    dispatch({
-      type: SUBMIT_COMMENT,
-      payload: data
-    });
+    dispatch(submitCommentAC(data));
   }
 
   useEffect(() => {
