@@ -1,21 +1,26 @@
-import './App.sass';
 import {Switch, Route} from "react-router-dom";
+import {Provider} from "react-redux";
+import store from '../src/redux/store';
+import jwtDecode from 'jwt-decode';
+import AuthRoute from "./utils/AuthRoute";
+import {instance} from "./api";
+//components
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import User from "./pages/User";
 import Navbar from "./components/layout/Navbar";
+//actions
+import {logoutUser, getUserData} from "./redux/actions/userActions";
+import {SET_AUTHENTICATED} from "./redux/types";
+//material-ui
 import {createTheme} from '@material-ui/core/styles';
 import {ThemeProvider} from "@material-ui/core";
 import {CssBaseline} from "@material-ui/core";
 import themeFile from './utils/theme';
-import jwtDecode from 'jwt-decode';
-import AuthRoute from "./utils/AuthRoute";
-import {Provider} from "react-redux";
-import store from '../src/redux/store';
-import {logoutUser, getUserData} from "./redux/actions/userActions";
-import {SET_AUTHENTICATED} from "./redux/types";
-import {instance} from "./api";
-import User from "./pages/User";
+//styles
+import './App.sass';
+
 
 const theme = createTheme(themeFile);
 const token = localStorage.socMernToken;

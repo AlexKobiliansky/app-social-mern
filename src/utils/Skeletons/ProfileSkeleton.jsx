@@ -1,12 +1,13 @@
 import React from 'react';
-import noAvatar from '../../images/no-avatar.png';
-
+//material-ui
+import {makeStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+//icons
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import LinkIcon from '@material-ui/icons/Link';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-
-import {makeStyles} from '@material-ui/core/styles';
+//images
+import noAvatar from '../../images/no-avatar.png';
 
 const useStyles = makeStyles({
   paper: {

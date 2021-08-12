@@ -1,11 +1,13 @@
 import React from 'react';
-import {makeStyles} from "@material-ui/core/styles";
-import {Grid} from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 import dayjs from "dayjs";
 import {API_URL} from "../../config";
-import {useSelector} from "react-redux";
+//material-ui
+import {makeStyles} from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+
 
 const useStyles = makeStyles({
   commentImage: {

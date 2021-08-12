@@ -7,7 +7,11 @@ import {
   SET_ERRORS,
   CLEAR_ERRORS,
   POST_SCREAM,
-  LOADING_UI, SET_SCREAM, STOP_LOADING_UI, SUBMIT_COMMENT, UPDATE_LIKES_ON_SCREAM
+  LOADING_UI,
+  SET_SCREAM,
+  STOP_LOADING_UI,
+  SUBMIT_COMMENT,
+  UPDATE_LIKES_ON_SCREAM
 } from '../types';
 import {instance} from "../../api";
 import {createNotification} from "./notificationActions";

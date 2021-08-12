@@ -1,16 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import {useDispatch} from "react-redux";
+
+import socket from "../../utils/socket";
+import {DELETE_SCREAM} from "../../redux/types";
+//components
 import MyButton from "../../utils/MyButton";
+//actions
+import {deleteScream, deleteScreamAC} from '../../redux/actions/dataActions';
+//material-ui
+import {makeStyles} from '@material-ui/core/styles';
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
+//icons
 import {DeleteOutline} from "@material-ui/icons";
 
-import {deleteScream, deleteScreamAC} from '../../redux/actions/dataActions';
-import {useDispatch} from "react-redux";
-import socket from "../../utils/socket";
-import {DELETE_SCREAM} from "../../redux/types";
 
 const useStyles = makeStyles({
   deleteButton: {

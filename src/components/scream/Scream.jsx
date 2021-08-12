@@ -1,19 +1,23 @@
 import React from 'react';
+import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import {API_URL} from '../../config';
+//components
+import DeleteScream from "./DeleteScream";
+import ScreamDialog from "./ScreamDialog";
+import LikeButton from "./LikeButton";
+import MyButton from "../../utils/MyButton";
+//material-ui
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from "@material-ui/core/Typography";
-import {Link} from "react-router-dom";
-import {API_URL} from '../../config';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import MyButton from "../../utils/MyButton";
+//icons
 import ChatIcon from '@material-ui/icons/Chat';
-import {useSelector} from "react-redux";
-import DeleteScream from "./DeleteScream";
-import ScreamDialog from "./ScreamDialog";
-import LikeButton from "./LikeButton";
+
 
 const useStyles = makeStyles({
   card: {

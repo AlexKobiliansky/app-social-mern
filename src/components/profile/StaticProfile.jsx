@@ -1,15 +1,17 @@
 import React from 'react';
-import {makeStyles} from "@material-ui/core/styles";
 import dayjs from "dayjs";
+import {API_URL} from "../../config";
+//material-ui
+import {makeStyles} from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
 import Link from '@material-ui/core/Link';
-import {Paper} from "@material-ui/core";
-import {Typography} from "@material-ui/core";
-
+import MuiLink from "@material-ui/core/Link";
+//icons
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import LinkIcon from '@material-ui/icons/Link';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import MuiLink from "@material-ui/core/Link";
-import {API_URL} from "../../config";
+
 
 const useStyles = makeStyles({
   paper: {

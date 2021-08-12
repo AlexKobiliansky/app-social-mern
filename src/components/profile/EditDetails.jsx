@@ -1,14 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import {editUserDetails} from "../../redux/actions/userActions";
 import {useDispatch, useSelector} from "react-redux";
-import EditIcon from '@material-ui/icons/Edit';
-import Button from '@material-ui/core/Button';
+//components
+import MyButton from "../../utils/MyButton";
+//actions
+import {editUserDetails} from "../../redux/actions/userActions";
+//material-ui
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import MyButton from "../../utils/MyButton";
+import Button from '@material-ui/core/Button';
+//icons
+import EditIcon from '@material-ui/icons/Edit';
+
 
 const EditDetails = () => {
   const dispatch = useDispatch();

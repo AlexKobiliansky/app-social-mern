@@ -1,10 +1,14 @@
 import React from 'react';
-import MyButton from "../../utils/MyButton";
+import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
+//components
+import MyButton from "../../utils/MyButton";
+//actions
+import {likeScream, unlikeScream} from "../../redux/actions/dataActions";
+//icons
 import {FavoriteBorder} from "@material-ui/icons";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import {useDispatch, useSelector} from "react-redux";
-import {likeScream, unlikeScream} from "../../redux/actions/dataActions";
+
 
 const LikeButton = ({scream}) => {
   const dispatch = useDispatch();

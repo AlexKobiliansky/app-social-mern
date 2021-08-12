@@ -1,12 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import {Grid} from "@material-ui/core";
-import {getUserData} from "../redux/actions/dataActions";
 import {useDispatch, useSelector} from "react-redux";
 import {instance} from "../api";
+//components
 import Scream from "../components/scream/Scream";
 import StaticProfile from "../components/profile/StaticProfile";
 import ScreamSkeleton from "../utils/Skeletons/ScreamSkeleton";
 import ProfileSkeleton from "../utils/Skeletons/ProfileSkeleton";
+//actions
+import {getUserData} from "../redux/actions/dataActions";
+//material-ui
+import Grid from "@material-ui/core/Grid";
+
+
+
+
 
 const User = (props) => {
   const dispatch = useDispatch();

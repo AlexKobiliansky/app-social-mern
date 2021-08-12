@@ -1,12 +1,17 @@
 import React, {useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
-import {CircularProgress, Grid} from "@material-ui/core";
-import logo from "../images/logo.png";
+//actions
+import {signupUser} from "../redux/actions/userActions";
+//material-ui
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import {signupUser} from "../redux/actions/userActions";
-import {useDispatch, useSelector} from "react-redux";
+//images
+import logo from "../images/logo.png";
+
 
 const Signup = () => {
   const dispatch = useDispatch();

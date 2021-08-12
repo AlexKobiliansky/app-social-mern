@@ -1,22 +1,27 @@
 import React, {useEffect, useState} from 'react';
-import MyButton from "../../utils/MyButton";
-import dayjs from "dayjs";
-import {Link} from 'react-router-dom';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import {CircularProgress} from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
-import UnfoldMore from "@material-ui/icons/UnfoldMore";
-import {Grid} from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
-import {getScream, clearErrors} from "../../redux/actions/dataActions";
-import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch, useSelector} from "react-redux";
+import {Link} from 'react-router-dom';
+import dayjs from "dayjs";
+import {API_URL} from "../../config";
+//components
 import LikeButton from "./LikeButton";
-import ChatIcon from "@material-ui/icons/Chat";
+import MyButton from "../../utils/MyButton";
 import Comments from "./Comments";
 import CommentForm from "./CommentForm";
-import {API_URL} from "../../config";
+//actions
+import {getScream, clearErrors} from "../../redux/actions/dataActions";
+//material-ui
+import {makeStyles} from "@material-ui/core/styles";
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+//icons
+import CloseIcon from "@material-ui/icons/Close";
+import UnfoldMore from "@material-ui/icons/UnfoldMore";
+import ChatIcon from "@material-ui/icons/Chat";
+
 
 const useStyles = makeStyles({
   profileImage: {

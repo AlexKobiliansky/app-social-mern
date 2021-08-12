@@ -1,13 +1,17 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
+//components
+import Notifications from "./Notifications";
+import PostScream from "../scream/PostScream";
+import MyButton from "../../utils/MyButton";
+//material-ui
 import AppBar from '@material-ui/core/AppBar';
+//icons
+import HomeIcon from '@material-ui/icons/Home';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
-import {useSelector} from "react-redux";
-import MyButton from "../../utils/MyButton";
-import HomeIcon from '@material-ui/icons/Home';
-import PostScream from "../scream/PostScream";
-import Notifications from "./Notifications";
+
 
 const Navbar = () => {
   const authenticated = useSelector(({user}) => user.authenticated);

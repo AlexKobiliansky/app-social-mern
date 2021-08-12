@@ -1,13 +1,17 @@
 import React, {useEffect} from 'react';
-import {Grid} from "@material-ui/core";
+import {useDispatch, useSelector} from "react-redux";
+import socket from "../utils/socket";
+//components
 import Scream from "../components/scream/Scream";
 import Profile from "../components/profile/Profile";
-import {getScreams, submitCommentAC, updateLikesAC} from "../redux/actions/dataActions";
-import {useDispatch, useSelector} from "react-redux";
 import ScreamSkeleton from "../utils/Skeletons/ScreamSkeleton";
+//actions
+import {getScreams, submitCommentAC, updateLikesAC} from "../redux/actions/dataActions";
 import {getUserNotifications} from "../redux/actions/notificationActions";
-import socket from "../utils/socket";
 import {UPDATE_LIKES_ON_SCREAM, NEW_NOTIFICATION} from "../redux/types";
+//material-ui
+import Grid from "@material-ui/core/Grid";
+
 
 const Home = () => {
   const dispatch = useDispatch();

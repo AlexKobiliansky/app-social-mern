@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+//actions
+import {submitComment} from "../../redux/actions/dataActions";
+//material-ui
 import {makeStyles} from "@material-ui/core/styles";
 import Button from '@material-ui/core/Button';
-import {Grid} from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 import TextField from '@material-ui/core/TextField';
-import {submitComment} from "../../redux/actions/dataActions";
-import {useDispatch, useSelector} from "react-redux";
+
 
 const useStyles = makeStyles({
   textField: {

@@ -1,6 +1,6 @@
 import React from 'react';
-import {IconButton} from "@material-ui/core";
 import Tooltip from "@material-ui/core/Tooltip";
+import {IconButton} from "@material-ui/core";
 
 const MyButton = ({children, onClick, tip, btnClassName, tipClassName }) => (
   <Tooltip title={tip} placement="top" className={tipClassName}>
